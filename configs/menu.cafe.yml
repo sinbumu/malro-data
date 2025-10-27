@@ -1,0 +1,12 @@
+version: "0.1.0"
+sku:
+  AMERICANO:
+    display: "아메리카노"
+    options:
+      size: [S, M, L]
+      temp: [ICE, HOT]
+  VANILLA_LATTE:
+    display: "바닐라 라떼"
+    options:
+      size: [S, M, L]
+      temp: [ICE, HOT]

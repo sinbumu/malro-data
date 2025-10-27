@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/malro/slots.schema.json",
+  "title": "Order",
+  "type": "object",
+  "properties": {
+    "order": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string", "enum": ["DINE_IN", "TAKE_OUT"]},
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": {"type": "string"},
+              "quantity": {"type": "integer", "minimum": 1},
+              "options": {
+                "type": "object",
+                "properties": {
+                  "size": {"type": "string", "enum": ["S", "M", "L"]},
+                  "temp": {"type": "string", "enum": ["ICE", "HOT"]},
+                  "shot": {"type": "integer", "minimum": 0},
+                  "syrup": {"type": "string"},
+                  "ice": {"type": "string", "enum": ["less", "normal", "more"]}
+                },
+                "additionalProperties": true
+              }
+            },
+            "required": ["sku", "quantity"]
+          }
+        }
+      },
+      "required": ["items"]
+    }
+  },
+  "required": ["order"],
+  "additionalProperties": false
+}

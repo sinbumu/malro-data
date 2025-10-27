@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+.env
+.python-version
+
+# Data (원천/중간 산출 제외)
+data/**
+!data/.gitkeep
+
+# CSV 대용량 파일 전역 제외
+*.csv
+
+# Reports/temporary
+reports/**

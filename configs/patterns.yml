@@ -1,0 +1,14 @@
+version: "2025-10-20"
+intents:
+  order:
+    include_regex:
+      - "주문|추가|빼|변경|포장|테이크아웃|사이즈|샷|시럽|뜨거운|차가운|아이스|핫|수량|개|잔|세트|메뉴|옵션"
+    exclude_regex:
+      - "취소(해|합니다)?|환불"
+slot_hints:
+  size: [S, M, L]
+  temp: [ICE, HOT]
+domain_overrides:
+  cafe:
+    size_alias: { 톨: M, 라지: L, 벤티: L }
+    temp_alias: { 아아: ICE, 뜨아: HOT }
