@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/malro/few_shots.schema.json",
+  "title": "Few Shots Line",
+  "type": "object",
+  "oneOf": [
+    {
+      "properties": {
+        "input": {"type": "string"},
+        "label": {"const": "ORDER_DRAFT"},
+        "target": {"$ref": "https://example.com/malro/slots.schema.json"}
+      },
+      "required": ["input", "label", "target"],
+      "additionalProperties": false
+    },
+    {
+      "properties": {
+        "input": {"type": "string"},
+        "label": {"const": "ASK"},
+        "missing_slots": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["sku", "size", "temp", "shot", "syrup", "ice", "quantity", "type"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "question": {"type": "string"}
+      },
+      "required": ["input", "label", "missing_slots", "question"],
+      "additionalProperties": false
+    }
+  ]
+}

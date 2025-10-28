@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/malro/artifact_manifest.schema.json",
+  "title": "Artifact Manifest",
+  "type": "object",
+  "properties": {
+    "domain": {"type": "string", "enum": ["cafe", "food"]},
+    "version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "counts": {
+      "type": "object",
+      "properties": {
+        "aliases": {"type": "integer", "minimum": 0},
+        "few_shots": {"type": "integer", "minimum": 0},
+        "evalset": {"type": "integer", "minimum": 0}
+      },
+      "required": ["aliases", "few_shots", "evalset"],
+      "additionalProperties": false
+    },
+    "source_hash": {"type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$"},
+    "patterns_version": {"type": "string"}
+  },
+  "required": ["domain", "version", "generated_at", "counts", "source_hash"],
+  "additionalProperties": true
+}

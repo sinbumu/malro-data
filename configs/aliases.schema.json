@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/malro/aliases.schema.json",
+  "title": "Aliases",
+  "type": "object",
+  "patternProperties": {
+    "^.+$": {
+      "type": "object",
+      "properties": {
+        "sku": {"type": "string"},
+        "size": {"type": "string", "enum": ["S", "M", "L"]},
+        "temp": {"type": "string", "enum": ["ICE", "HOT"]},
+        "shot": {"type": "integer", "minimum": 0},
+        "syrup": {"type": "string"},
+        "ice": {"type": "string", "enum": ["less", "normal", "more"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

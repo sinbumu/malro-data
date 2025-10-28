@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/malro/evalset.schema.json",
+  "title": "Eval Set Line",
+  "type": "object",
+  "properties": {
+    "input": {"type": "string"},
+    "gold": {"$ref": "https://example.com/malro/slots.schema.json"}
+  },
+  "required": ["input", "gold"],
+  "additionalProperties": true
+}
