@@ -1,0 +1,11 @@
+{"input": "아메리카노 따뜻하게 주문 가능한가요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
+{"input": "아메리카노 유리잔에 주세요.", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
+{"input": "청포도 에이드 한 잔이랑 망고 에이드 두 잔, 녹차 라떼 한 잔 배달 주문 가능한가요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "LATTE", "quantity": 1}]}}}
+{"input": "아메리카노 두잔만 시켜도 배달 가능한가요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 2}]}}}
+{"input": "아까 주문한 아메리카노 두 잔 취소했는데 확인 하셨죠?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 2}]}}}
+{"input": "아이스 아메리카노는 얼마에요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
+{"input": "아이스 아메리카노가 할로윈 혼파티 세트에 포함되는 거 맞죠?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
+{"input": "카페라떼 디카페인으로 다섯 잔 가져갈 수 있게 테이크아웃 잔에 넣어주세요.", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "LATTE", "quantity": 5}]}}}
+{"input": "바닐라라떼 아이스만 주문 가능한가요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
+{"input": "콜드브루 바닐라라떼 4잔 포장하면 어떻게 줘요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "LATTE", "quantity": 4}]}}}
+{"input": "이번에 새로 나온 메뉴 이름이 토피넛라떼인가요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "LATTE", "quantity": 1}]}}}
