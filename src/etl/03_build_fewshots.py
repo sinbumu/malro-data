@@ -8,7 +8,7 @@ from typing import Dict, List
 import pandas as pd
 
 from src.utils.io import Paths, write_jsonl, load_yaml
-from src.utils.menu import load_menu_mapping, has_menu_phrase
+from src.utils.menu import load_combined_mapping, has_menu_phrase, load_aliases_map
 from src.utils.parse import detect_sku, detect_size, detect_temp, parse_quantity, parse_order_items
 
 
@@ -38,7 +38,8 @@ def main() -> None:
     if not interim.exists():
         raise FileNotFoundError(f"missing interim file: {interim}")
     df = pd.read_csv(interim)
-    menu_mapping = load_menu_mapping(paths.configs / f"menu.{args.domain}.yml")
+    aliases_map = load_aliases_map(paths.configs / f"aliases.{args.domain}.yml")
+    menu_mapping = load_combined_mapping(paths.configs / f"menu.{args.domain}.yml", paths.configs / f"aliases.{args.domain}.yml")
     patterns = load_yaml(paths.configs / "patterns.yml")
 
     import re
@@ -56,7 +57,12 @@ def main() -> None:
             continue
         res = to_order_or_ask(text, menu_mapping)
         if res["label"] == "ORDER_DRAFT":
-            rows.append({"input": text, "label": res["label"], "target": res["target"]})
+            # 멀티 아이템 파싱 시 aliases 암시 옵션 반영을 위해 재파싱
+            from src.utils.parse import parse_order_items
+            items = parse_order_items(text, menu_mapping, aliases_map)
+            if not items:
+                continue
+            rows.append({"input": text, "label": "ORDER_DRAFT", "target": {"order": {"items": items}}})
         else:
             if args.only_order_draft:
                 continue

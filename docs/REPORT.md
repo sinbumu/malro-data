@@ -17,16 +17,16 @@
    - 출력: `outputs/{domain}/aliases.json`
 
 3) Few-shots(03)
-   - 메뉴 매핑: `configs/menu.{domain}.yml`의 `display/synonyms`를 로드
+   - 메뉴 매핑: `configs/menu.{domain}.yml`(정식 SKU/옵션) + `configs/aliases.{domain}.yml`(별칭/암시 옵션) 동시 로드
    - 주문 게이트: (a) 메뉴 언급 존재, (b) 주문 동사 정규식 매칭 → 만족할 때만 샘플 생성
    - 멀티 아이템: 쉼표/접속사(그리고/와/랑/및)로 분할 후 각 세그먼트에서 SKU/수량/옵션 추출
    - 수량 파싱: 숫자/한글수(예: 다섯 개, 10잔)
-   - 옵션 파싱: ICE/HOT, S/M/L(톨/라지/벤티 매핑)
+   - 옵션 파싱: ICE/HOT, S/M/L(톨/라지/벤티 매핑) + 별칭의 암시 옵션 병합(명시값 우선)
    - 라벨 정책: SKU 확실 → ORDER_DRAFT, 불확실 → ASK(기본 파이프라인에선 제외)
    - 출력: `outputs/{domain}/few_shots.jsonl`
 
 4) Evalset(04)
-   - Few-shots와 동일한 파싱/매핑 로직으로 확실한 케이스만 gold 생성
+   - Few-shots와 동일한 파싱/매핑 로직(메뉴+별칭, 암시 옵션 병합)으로 확실한 케이스만 gold 생성
    - 멀티 아이템 포함, 상한 N 유지
    - 출력: `outputs/{domain}/evalset.jsonl`
 
@@ -35,6 +35,9 @@
    - `artifact_manifest.json` 기록: domain/version/generated_at/counts/source_hash/patterns_version
 
 ## 스키마/계약
+- `configs/menu.{domain}.yml`: 정식 SKU/옵션/가격(선택) 정의(운영 원본)
+- `configs/aliases.{domain}.yml`: 별칭/동의어 → { sku?, options? } (옵션 단독 별칭 허용)
+- `configs/patterns.yml`: 주문성 게이트 정규식(include/exclude)
 - `configs/slots.schema.json`: 주문 JSON 스키마(앱과 공유)
 - `configs/*schema.json`: aliases/few_shots/evalset/manifest 검증 스키마
 

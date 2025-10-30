@@ -86,17 +86,31 @@ def split_order_segments(text: str) -> list[str]:
     return parts
 
 
-def parse_order_items(text: str, menu_mapping: Optional[MenuMapping]) -> list[dict]:
+def parse_order_items(text: str, menu_mapping: Optional[MenuMapping], aliases_map: Optional[dict] = None) -> list[dict]:
     items: list[dict] = []
     for seg in split_order_segments(text):
         sku = detect_sku(seg, menu_mapping)
         if not sku:
-            continue
+            # alias에 sku가 명시된 경우로 보완
+            if aliases_map:
+                for phrase, cfg in aliases_map.items():
+                    if phrase and phrase in seg and cfg.get("sku"):
+                        sku = cfg["sku"]
+                        break
+            if not sku:
+                continue
         qty = parse_quantity(seg) or 1
         temp = detect_temp(seg)
         size = detect_size(seg)
         item = {"sku": sku, "quantity": qty}
         opts = {k: v for k, v in {"temp": temp, "size": size}.items() if v is not None}
+        # alias가 암시 옵션을 제공하면 기본 옵션에 병합(명시된 값 우선)
+        if aliases_map:
+            for phrase, cfg in aliases_map.items():
+                if phrase and phrase in seg:
+                    implied = (cfg.get("options") or {}) if isinstance(cfg, dict) else {}
+                    for k, v in implied.items():
+                        opts.setdefault(k, v)
         if opts:
             item["options"] = opts
         items.append(item)

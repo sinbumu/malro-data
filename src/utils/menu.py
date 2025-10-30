@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from rapidfuzz import fuzz, process
 
@@ -27,6 +27,27 @@ def load_menu_mapping(menu_yaml_path: Path) -> MenuMapping:
         for ph in norm_phrases:
             phrase_to_sku[ph] = sku
     return MenuMapping(phrase_to_sku=phrase_to_sku, sku_to_phrases=sku_to_phrases)
+
+
+def load_aliases_map(aliases_yaml_path: Path) -> Dict[str, dict]:
+    if not aliases_yaml_path.exists():
+        return {}
+    data = load_yaml(aliases_yaml_path) or {}
+    return {k: v for k, v in (data.get("aliases", {}) or {}).items() if isinstance(v, dict)}
+
+
+def load_combined_mapping(menu_yaml_path: Path, aliases_yaml_path: Optional[Path] = None) -> MenuMapping:
+    mapping = load_menu_mapping(menu_yaml_path)
+    if aliases_yaml_path is None or not aliases_yaml_path.exists():
+        return mapping
+    aliases = load_aliases_map(aliases_yaml_path)
+    # alias에 sku가 명시된 경우 phrase_to_sku에 추가
+    for phrase, cfg in aliases.items():
+        sku = cfg.get("sku")
+        if isinstance(phrase, str) and sku:
+            mapping.phrase_to_sku[phrase] = sku
+            mapping.sku_to_phrases.setdefault(sku, []).append(phrase)
+    return mapping
 
 
 def find_sku_by_text(text: str, mapping: MenuMapping, threshold: int = 88) -> str | None:

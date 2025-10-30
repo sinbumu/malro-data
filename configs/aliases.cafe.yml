@@ -1,0 +1,12 @@
+version: "0.1.0"
+aliases:
+  # 메뉴 별칭(암시 옵션 포함 가능)
+  "아아": { sku: AMERICANO, options: { temp: ICE } }
+  "뜨아": { sku: AMERICANO, options: { temp: HOT } }
+  "바닐라라떼": { sku: VANILLA_LATTE }
+
+  # 옵션 단독 별칭(메뉴 없이 옵션만 암시)
+  "톨": { options: { size: M } }
+  "라지": { options: { size: L } }
+  "벤티": { options: { size: L } }
+

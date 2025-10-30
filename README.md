@@ -40,45 +40,75 @@ malro-data/
 
 ## 설정(configs) 가이드(MVP 필수)
 
-1) `configs/menu.cafe.yml`: 메뉴와 동의어 정의(매칭 정확도 핵심)
+아래 3개 파일만 준비하면 됩니다. 외부에서 가게 메뉴셋을 정의(1) → 별칭 정의(2) → 본 저장소 `configs/`에 넣고 생성(3).
+
+### 1) 메뉴 정의: `configs/menu.{domain}.yml`
+- 역할: 정식 SKU/옵션/가격(선택) 정의. 운영 출처.
+- 최소 필드
 ```
 version: "0.2.0"
+currency: "KRW"           # 선택
 sku:
   AMERICANO:
     display: "아메리카노"
-    synonyms: ["아이스 아메리카노", "아아", "뜨아", "아메리카노"]
+    category: "COFFEE"   # 선택
+    price:                # 선택(앱/리포트용)
+      base: 3000
+      by_size: { S: 0, M: 500, L: 1000 }
     options:
       size: [S, M, L]
       temp: [ICE, HOT]
   LATTE:
     display: "카페라떼"
-    synonyms: ["라떼", "카페라떼", "카페 라떼", "아이스 라떼", "뜨거운 라떼"]
-    options:
-      size: [S, M, L]
-      temp: [ICE, HOT]
+    options: { size: [S, M, L], temp: [ICE, HOT] }
   VANILLA_LATTE:
     display: "바닐라 라떼"
-    synonyms: ["바닐라라떼", "아이스 바닐라라떼"]
-    options:
-      size: [S, M, L]
-      temp: [ICE, HOT]
+    options: { size: [S, M, L], temp: [ICE, HOT] }
 ```
-- 동의어 배열에 실제 점포 표현/오탈자/구어체를 추가할수록 SKU 매칭률이 향상됩니다.
-- 메뉴가 늘어나면 `sku:` 아래에 계속 추가하세요.
+- 비고: `synonyms`는 운영에선 비우는 것을 권장(별칭은 아래 파일에서 관리).
 
-2) `configs/patterns.yml`: 주문성 키워드/정규식 게이트
+### 2) 별칭/동의어: `configs/aliases.{domain}.yml`
+- 역할: 자유표현 → SKU 및 암시 옵션 매핑(옵션 단독 별칭 허용).
+```
+version: "0.1.0"
+aliases:
+  "아아": { sku: AMERICANO, options: { temp: ICE } }
+  "뜨아": { sku: AMERICANO, options: { temp: HOT } }
+  "바닐라라떼": { sku: VANILLA_LATTE }
+  # 옵션 단독 별칭(메뉴 없이 옵션만 암시)
+  "톨": { options: { size: M } }
+  "라지": { options: { size: L } }
+  "벤티": { options: { size: L } }
+```
+- 동작: few-shots/evalset 생성 시, 세그먼트에 별칭이 등장하면 해당 SKU/옵션을 암시값으로 병합(사용자 명시값이 우선).
+
+### 3) 주문 게이트: `configs/patterns.yml`
+- 역할: 주문성 문장 판별 키워드/정규식.
 ```
 intents:
   order:
     include_regex:
       - "주문|주세요|추가|빼|변경|포장|테이크아웃|예약|사이즈|샷|시럽|뜨거운|차가운|아이스|핫|수량|개|잔|세트|메뉴|옵션"
+    exclude_regex: []    # 선택(취소/환불 등 제외 규칙)
 ```
-- few_shots 생성 시, 메뉴 언급 + 위 정규식 중 하나라도 매칭되어야 ORDER_DRAFT로 채택됩니다.
+- few_shots는 “메뉴 언급 + include_regex 매칭”을 동시에 만족해야 ORDER_DRAFT로 채택.
 
-3) 스키마 파일(검증용)
-- `configs/slots.schema.json`: 주문 JSON 스키마
-- `configs/aliases.schema.json`, `configs/few_shots.schema.json`, `configs/evalset.schema.json`, `configs/artifact_manifest.schema.json`
+### 4) 산출물 검증 스키마(참고)
+- `configs/slots.schema.json`, `configs/aliases.schema.json`, `configs/few_shots.schema.json`, `configs/evalset.schema.json`, `configs/artifact_manifest.schema.json`
 - ETL 마지막 단계에서 `jsonschema`로 모든 산출물을 검증합니다.
+
+### 외부 준비 → 생성 절차
+1. 가게 메뉴셋 작성: `menu.{domain}.yml`(정식 SKU/옵션/가격)
+2. 별칭 작성: `aliases.{domain}.yml`(동의어/약칭/오탈자, 암시 옵션 포함)
+3. 두 파일을 본 저장소 `configs/`에 놓고 실행:
+```
+make artifacts DOMAIN=cafe
+```
+4. 산출물 확인: `outputs/{domain}/*`를 앱에서 사용
+
+### 도메인 확장 규칙
+- `{domain}` 이름만 바꿔 동일 규격으로 파일을 추가하면 됩니다(예: `menu.food.yml`, `aliases.food.yml`).
+- Make 실행 시 `DOMAIN=food`로 지정.
 
 ## 파이프라인 개요
 - 01 Filter: `data/raw/{domain}_*.csv` 로드 → 발화자=c, QA=q + 정규식 기반 주문성 필터 → `interim`
