@@ -36,6 +36,11 @@ artifacts: domain=cafe, version=0.1.0, source={sha256:...}
 - 구조화 출력: JSON 모드/함수 호출/스키마 제약 활용 → 파싱 실패 최소화
 - 검증 루프: jsonschema 실패 시 자동 보정 또는 ASK 반환
 
+### 사전점검 체크리스트(앱 측)
+- 슬롯 enum 통일: `slots.schema.json`을 소스 오브 트루스로 삼아 `size(S/M/L)`, `temp(ICE/HOT)`, `ice(less/normal/more)` 등 표기를 단일화. `artifact_manifest.version`을 프롬프트 캐시 키/로그에 포함해 재현성 보장.
+- 메뉴-옵션 허용: `menu.json`의 `allow_options`+`sizes_enabled`에 따라 옵션 허용 여부를 검증(예: 에스프레소는 사이즈 비활성).
+- 별칭 충돌 로깅: 동일 term이 다수 SKU로 해석되면 경고 로그를 남기고 ASK 유도(불확실 시 사용자에게 확인 질문).
+
 ## 의사 코드(Typescript)
 ```ts
 const artifacts = loadArtifacts(domain); // menu.json, aliases.json, few_shots.jsonl, manifest

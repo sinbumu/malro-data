@@ -45,6 +45,11 @@
 - `configs/slots.schema.json`: 주문 JSON 스키마(앱과 공유)
 - `configs/*schema.json`: aliases/few_shots/evalset/manifest 검증 스키마
 
+### 사전점검(Preflight) 규칙
+- 슬롯 enum 통일: `slots.schema.json`을 기준으로 `size(S/M/L)`, `temp(ICE/HOT)`, `ice(less|normal|more)` 표기 강제(검증 실패 시 중단)
+- 메뉴-옵션 허용: `menu.json`의 `allow_options` + `sizes_enabled`/`temps`와 불일치하는 옵션 사용 시 실패
+- 별칭 충돌/중복: `aliases.{domain}.yml` 내 동일 term이 다수 SKU에 매핑될 경우 경고 로그(비치명). 앱 단계에서 ASK 유도 권장
+
 ## 현재 품질 & 한계
 - 장점
   - 메뉴 동의어 기반 매칭 + 주문 게이트로 비주문성/잡음 상당 부분 제거
