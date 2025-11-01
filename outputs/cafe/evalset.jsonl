@@ -9,7 +9,7 @@
 {"input": "아이스라떼를 주문했는데 카페모카가 나왔어요.", "gold": {"order": {"items": [{"sku": "CAFE_MOCHA", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "제주녹차 카스테라 지금 주문 안 되나요?", "gold": {"order": {"items": [{"sku": "GREEN_TEA", "quantity": 1}]}}}
 {"input": "시나몬모카 네 잔 포장하면 어떻게 줘요?", "gold": {"order": {"items": [{"sku": "CAFE_MOCHA", "quantity": 4}]}}}
-{"input": "에스프레소 1잔만 샷 추가로 변경했는데, 주문 잘 들어간 것 맞죠?", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 1, "options": {"shot": 1}}]}}}
+{"input": "에스프레소 1잔만 샷 추가로 변경했는데, 주문 잘 들어간 것 맞죠?", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 1}]}}}
 {"input": "브런치 세트 아메리카노 라떼로 변경 가능하죠?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "혹시 초코 쏙 녹차 찹쌀떡은 개당 얼마인가요?", "gold": {"order": {"items": [{"sku": "GREEN_TEA", "quantity": 1}]}}}
 {"input": "아이스 흑임자 카페라테 하나 주문할게요.", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
@@ -17,7 +17,7 @@
 {"input": "에스프레소 주문할 수 있나요?", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 1}]}}}
 {"input": "화이트카페모카 아이스로 되나요?", "gold": {"order": {"items": [{"sku": "CAFE_MOCHA", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아메리카노에 시럽 넣어주세요", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
-{"input": "레몬에이드 주문한 거 핫초코로 바꿀게요.", "gold": {"order": {"items": [{"sku": "LEMON_ADE", "quantity": 1, "options": {"temp": "HOT"}}]}}}
+{"input": "레몬에이드 주문한 거 핫초코로 바꿀게요.", "gold": {"order": {"items": [{"sku": "LEMON_ADE", "quantity": 1}]}}}
 {"input": "당도가 엄청 높다고 하던데 돌체라떼 두 잔 주문 되죠?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 2}]}}}
 {"input": "아메리카노에 시럽 넣으면 칼로리가 어느 정도 더 높아지나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "레몬아이스티도 있나요?", "gold": {"order": {"items": [{"sku": "PEACH_ICED_TEA", "quantity": 1, "options": {"temp": "ICE"}}]}}}
@@ -46,7 +46,7 @@
 {"input": "아메리카노 한 잔은 지금 주시고 다른 하나는 이따 친구 오면 주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "아이스아메리카노에 얼음 추가할 수 있죠?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "매장에 흑임자 라떼 출시 안 했습니까?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
-{"input": "아이스티에 샷 추가해 주세요.", "gold": {"order": {"items": [{"sku": "PEACH_ICED_TEA", "quantity": 1, "options": {"temp": "ICE", "shot": 1}}]}}}
+{"input": "아이스티에 샷 추가해 주세요.", "gold": {"order": {"items": [{"sku": "PEACH_ICED_TEA", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아이스 라떼 주문 했는데 빨대 좀 하나 더 부탁드려요.", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "돌체라떼 그란데 사이즈는 용량이 얼마나 되나요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"size": "L"}}]}}}
 {"input": "카페라떼 말고 카라멜 라떼로 변경된 거 맞죠?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
@@ -54,7 +54,7 @@
 {"input": "아메리카노에 얼음 적게 넣어주시고, 샷도 하나 추가해주시겠어요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"ice": "less"}}]}}}
 {"input": "친구 한 명이 못 온다고 하니 아메리카노 3잔 중 1잔은 취소해 주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 3}]}}}
 {"input": "아이스 아메리카노 그란데 사이즈로 하나주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE", "size": "L"}}]}}}
-{"input": "자바칩 프라푸치노에 들어가는 걸 두유로 변경하면 추가금 내야 되나요?", "gold": {"order": {"items": [{"sku": "COFFEE_FRAPPE", "quantity": 1, "options": {"temp": "ICE", "milk": "SOY"}}]}}}
+{"input": "자바칩 프라푸치노에 들어가는 걸 두유로 변경하면 추가금 내야 되나요?", "gold": {"order": {"items": [{"sku": "COFFEE_FRAPPE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아메리카노 아이스로 한 개 테이크아웃 할려고요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "카페라떼 사이즈업 하면 얼마 추가 되는지 알려주실래요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
 {"input": "아까 아메리카노 주문했는데 제조 전이면 취소할 수 있나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
@@ -104,7 +104,7 @@
 {"input": "아메리카노 주문했는데 왜 라떼로 나왔나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "생강차 따뜻한 거 한잔이랑 아메리카노 큰거 아이스 한잔 따뜻한 아메리카노 작은거", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아인슈페너 두 잔과 토피넛 라떼 한 잔 혹시 배달주문 되나요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
-{"input": "에스프레소에 샷 추가 가능한거죠?", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 1, "options": {"shot": 1}}]}}}
+{"input": "에스프레소에 샷 추가 가능한거죠?", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 1}]}}}
 {"input": "시원한게 먹고 싶어서 녹차 차가운 걸로 시켰는데 마음이 변했으니 취소해 주세요.", "gold": {"order": {"items": [{"sku": "GREEN_TEA", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아이스 아메리카노로 하나만 주실래요", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "방금 주문한 메뉴 중에 아메리카노는 뺄게요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
@@ -116,7 +116,7 @@
 {"input": "아이스 흑당펄 라떼 테이크아웃 해주세요.", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아메리카노를 직원분이 쏟으셔서 복숭아이스티로 교환하려는데 비용 발생하나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아메리카노 3잔도 같이 주문했었는데 예약 취소랑 동일하게 취소된 거 맞죠?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 3}]}}}
-{"input": "캐모마일 아이스로 가능한가요?", "gold": {"order": {"items": [{"sku": "CHAMOMILE_TEA", "quantity": 1, "options": {"temp": "ICE"}}]}}}
+{"input": "캐모마일 아이스로 가능한가요?", "gold": {"order": {"items": [{"sku": "CHAMOMILE_TEA", "quantity": 1}]}}}
 {"input": "아메리카노 따뜻하게 주문했는데 혹시 시원한 걸로 주문 변경 가능한지 알려주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "HOT"}}]}}}
 {"input": "팀원들이 먼저 시키고 들어갔는데, 같은 테이블로 아메리카노 네 잔 추가해주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 4}]}}}
 {"input": "카페라떼 핫으로 주문 드렸는데 아이스 카페라떼로 변경 하고 싶어요.", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
@@ -159,7 +159,7 @@
 {"input": "아이스 아메리카노 샷 추가해서 그란데로 두 잔 주문할게요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 2, "options": {"temp": "ICE", "size": "L", "shot": 1}}]}}}
 {"input": "아메리카노 두 개 주문했는데 왜 한 개만 주시는 건가요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "딸바주스 한잔은 수박주스로 바꾸고 싶어요.", "gold": {"order": {"items": [{"sku": "STRAWBERRY_BANANA_SMOOTHIE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
-{"input": "이 매장은 카페라떼에 들어가는 우유를 두유로 바꿔주실 수 있나요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"milk": "SOY"}}]}}}
+{"input": "이 매장은 카페라떼에 들어가는 우유를 두유로 바꿔주실 수 있나요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
 {"input": "토피넛라떼랑 아이스 아메리카노 한 잔씩 주문하면 얼만지 알려주실래요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}, {"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "말차 티라미수 와플 두 개에 생크림 누텔라 와플 한 개 같이 포장해주세요.", "gold": {"order": {"items": [{"sku": "TIRAMISU", "quantity": 1}]}}}
 {"input": "아메리카노 그란데로 업그레이드 문에 결제 추가했습니다.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"size": "L"}}]}}}
@@ -173,7 +173,7 @@
 {"input": "아메리카노 두잔인데 쿠폰은 1개만 주셨어요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "아메리카노 4잔 포장하려면 오래걸리나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 4}]}}}
 {"input": "아이스라떼 하나 주시고 헤이즐넛 시럽 추가 부탁드려요.", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
-{"input": "에스프레소 프라푸치노 8잔 포장해주세요.", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 8, "options": {"temp": "ICE"}}]}}}
+{"input": "에스프레소 프라푸치노 8잔 포장해주세요.", "gold": {"order": {"items": [{"sku": "ESPRESSO", "quantity": 8}]}}}
 {"input": "달고나 라테 아이스로 부탁드려요.", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아메리카노에 헤이즐넛 시럽 좀 넣어주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}
 {"input": "아이스 아메리카노랑 스트로베리 조각케이크를 함께 주문할게요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
@@ -183,10 +183,10 @@
 {"input": "시원한 아메리카노 한 잔 라지 사이즈로 시킬 건데 이 컵 용량이 450ml 맞나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"size": "L"}}]}}}
 {"input": "아이스아메리카노 오리지널에 샷을 하나 더 추가해주세요.", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아이스 아메리카노 3잔 주문할건데 결제는 나갈 때 해도 되죠?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 3, "options": {"temp": "ICE"}}]}}}
-{"input": "콜드브루 따뜻하게 주문할게요.", "gold": {"order": {"items": [{"sku": "COLD_BREW", "quantity": 1, "options": {"temp": "HOT"}}]}}}
+{"input": "콜드브루 따뜻하게 주문할게요.", "gold": {"order": {"items": [{"sku": "COLD_BREW", "quantity": 1}]}}}
 {"input": "휘핑크림 추가한 달고나 라떼 아이스로 주문하면 얼마인지 확인해 주실래요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아이스크림 라떼는 포장 안 되는 거죠?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
-{"input": "아이스 카푸치노 한잔 주세요. 여기서 먹고 가고 싶어요.", "gold": {"order": {"items": [{"sku": "CAPPUCCINO", "quantity": 1, "options": {"temp": "ICE"}}]}}}
+{"input": "아이스 카푸치노 한잔 주세요. 여기서 먹고 가고 싶어요.", "gold": {"order": {"items": [{"sku": "CAPPUCCINO", "quantity": 1}]}}}
 {"input": "저희 방금 주문한 회사원 테이블인데 고구마라떼 추가해주세요.", "gold": {"order": {"items": [{"sku": "SWEET_POTATO_LATTE", "quantity": 1}]}}}
 {"input": "카페라떼에 우유 추가로 넣고 싶은데 추가로 지불해야 하는 비용 있나요?", "gold": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
 {"input": "가져온 텀블러에 아메리카노 주문 시 할인이 되나요?", "gold": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1}]}}}

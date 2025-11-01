@@ -36,7 +36,7 @@
 {"input": "얼그레이 케익은 포장해주실 수 있나요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "EARL_GREY_TEA", "quantity": 1}]}}}
 {"input": "아이스 딸기라떼 얼마에요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
 {"input": "아이스크림라떼는 몇 가지 사이즈로 판매하나요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "ICE"}}]}}}
-{"input": "카페라떼에 우유를 두유로 변경해주실래요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"milk": "SOY"}}]}}}
+{"input": "카페라떼에 우유를 두유로 변경해주실래요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1}]}}}
 {"input": "아메리카노 핫으로 테이크아웃이요.", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 1, "options": {"temp": "HOT"}}]}}}
 {"input": "카페라떼 핫으로 하고 시럽까지 추가하면 가격이 어떻게 될까요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "CAFE_LATTE", "quantity": 1, "options": {"temp": "HOT"}}]}}}
 {"input": "아메리카노 4잔 픽업주문 가능한가요?", "label": "ORDER_DRAFT", "target": {"order": {"items": [{"sku": "AMERICANO", "quantity": 4}]}}}
