@@ -1,12 +1,12 @@
 {
   "domain": "cafe",
   "version": "0.1.0",
-  "generated_at": "2025-10-30T08:48:54.905356+00:00",
+  "generated_at": "2025-11-01T03:50:48.267946+00:00",
   "counts": {
-    "aliases": 2,
-    "few_shots": 11,
-    "evalset": 141
+    "aliases": 111,
+    "few_shots": 62,
+    "evalset": 226
   },
-  "source_hash": "sha256:84d81dbeced5cc6ec9fdac70eaae37c0ddae920e8bac7db268c3004010918fda",
+  "source_hash": "sha256:9970b56515813e309ed8e027bc00a761051afcbd7d4a58d640608d8053989dc5",
   "patterns_version": "2025-10-20"
 }

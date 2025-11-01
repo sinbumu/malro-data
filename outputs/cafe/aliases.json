@@ -1,8 +1,360 @@
 {
-  "톨": {
+  "아아": {
+    "sku": "AMERICANO",
+    "temp": "ICE"
+  },
+  "뜨아": {
+    "sku": "AMERICANO",
+    "temp": "HOT"
+  },
+  "아메": {
+    "sku": "AMERICANO"
+  },
+  "아메리 카노": {
+    "sku": "AMERICANO"
+  },
+  "americano": {
+    "sku": "AMERICANO"
+  },
+  "카페 라떼": {
+    "sku": "CAFE_LATTE"
+  },
+  "라떼": {
+    "sku": "CAFE_LATTE"
+  },
+  "라테": {
+    "sku": "CAFE_LATTE"
+  },
+  "아라": {
+    "sku": "CAFE_LATTE",
+    "temp": "ICE"
+  },
+  "핫라떼": {
+    "sku": "CAFE_LATTE",
+    "temp": "HOT"
+  },
+  "아이스 라떼": {
+    "sku": "CAFE_LATTE",
+    "temp": "ICE"
+  },
+  "카푸치노": {
+    "sku": "CAPPUCCINO"
+  },
+  "카프치노": {
+    "sku": "CAPPUCCINO"
+  },
+  "카푸치오노": {
+    "sku": "CAPPUCCINO"
+  },
+  "모카": {
+    "sku": "CAFE_MOCHA"
+  },
+  "카페 모카": {
+    "sku": "CAFE_MOCHA"
+  },
+  "바닐라 라떼": {
+    "sku": "VANILLA_LATTE"
+  },
+  "바닐라라테": {
+    "sku": "VANILLA_LATTE"
+  },
+  "바라": {
+    "sku": "VANILLA_LATTE"
+  },
+  "카라멜 마키아토": {
+    "sku": "CARAMEL_MACCHIATO"
+  },
+  "카라멜 마끼아또": {
+    "sku": "CARAMEL_MACCHIATO"
+  },
+  "카라멜 마끼아토": {
+    "sku": "CARAMEL_MACCHIATO"
+  },
+  "카라멜 마키야또": {
+    "sku": "CARAMEL_MACCHIATO"
+  },
+  "카라멜마끼": {
+    "sku": "CARAMEL_MACCHIATO"
+  },
+  "카마": {
+    "sku": "CARAMEL_MACCHIATO"
+  },
+  "에스프레쏘": {
+    "sku": "ESPRESSO"
+  },
+  "에스프레소": {
+    "sku": "ESPRESSO"
+  },
+  "엑스프레소": {
+    "sku": "ESPRESSO"
+  },
+  "에쏘": {
+    "sku": "ESPRESSO"
+  },
+  "콜드 브루": {
+    "sku": "COLD_BREW"
+  },
+  "콜드브루": {
+    "sku": "COLD_BREW"
+  },
+  "콜브루": {
+    "sku": "COLD_BREW"
+  },
+  "콜부": {
+    "sku": "COLD_BREW"
+  },
+  "콜드브루 라떼": {
+    "sku": "COLD_BREW_LATTE"
+  },
+  "콜브루 라떼": {
+    "sku": "COLD_BREW_LATTE"
+  },
+  "콜 라떼": {
+    "sku": "COLD_BREW_LATTE"
+  },
+  "말차 라떼": {
+    "sku": "MATCHA_LATTE"
+  },
+  "그린티 라떼": {
+    "sku": "MATCHA_LATTE"
+  },
+  "녹차 라떼": {
+    "sku": "MATCHA_LATTE"
+  },
+  "호지 라떼": {
+    "sku": "HOJICHA_LATTE"
+  },
+  "호지차 라떼": {
+    "sku": "HOJICHA_LATTE"
+  },
+  "고구마 라떼": {
+    "sku": "SWEET_POTATO_LATTE"
+  },
+  "자색 고구마 라떼": {
+    "sku": "SWEET_POTATO_LATTE"
+  },
+  "차이 라떼": {
+    "sku": "CHAI_LATTE"
+  },
+  "차이티 라떼": {
+    "sku": "CHAI_LATTE"
+  },
+  "마살라 차이 라떼": {
+    "sku": "CHAI_LATTE"
+  },
+  "얼그레이": {
+    "sku": "EARL_GREY_TEA"
+  },
+  "얼그레이 티": {
+    "sku": "EARL_GREY_TEA"
+  },
+  "홍차": {
+    "sku": "EARL_GREY_TEA"
+  },
+  "그린 티": {
+    "sku": "GREEN_TEA"
+  },
+  "녹차": {
+    "sku": "GREEN_TEA"
+  },
+  "캐모마일": {
+    "sku": "CHAMOMILE_TEA"
+  },
+  "카모마일": {
+    "sku": "CHAMOMILE_TEA"
+  },
+  "복숭아 아이스티": {
+    "sku": "PEACH_ICED_TEA",
+    "temp": "ICE"
+  },
+  "피치 아이스티": {
+    "sku": "PEACH_ICED_TEA",
+    "temp": "ICE"
+  },
+  "아이스티": {
+    "sku": "PEACH_ICED_TEA",
+    "temp": "ICE"
+  },
+  "레몬 에이드": {
+    "sku": "LEMON_ADE",
+    "temp": "ICE"
+  },
+  "레모네이드": {
+    "sku": "LEMON_ADE",
+    "temp": "ICE"
+  },
+  "자몽 에이드": {
+    "sku": "GRAPEFRUIT_ADE",
+    "temp": "ICE"
+  },
+  "그레이프프루트 에이드": {
+    "sku": "GRAPEFRUIT_ADE",
+    "temp": "ICE"
+  },
+  "라임 민트 에이드": {
+    "sku": "LIME_MINT_ADE",
+    "temp": "ICE"
+  },
+  "모히또": {
+    "sku": "LIME_MINT_ADE",
+    "temp": "ICE"
+  },
+  "모히토": {
+    "sku": "LIME_MINT_ADE",
+    "temp": "ICE"
+  },
+  "딸기 바나나 스무디": {
+    "sku": "STRAWBERRY_BANANA_SMOOTHIE",
+    "temp": "ICE"
+  },
+  "딸바 스무디": {
+    "sku": "STRAWBERRY_BANANA_SMOOTHIE",
+    "temp": "ICE"
+  },
+  "딸바": {
+    "sku": "STRAWBERRY_BANANA_SMOOTHIE",
+    "temp": "ICE"
+  },
+  "망고 스무디": {
+    "sku": "MANGO_SMOOTHIE",
+    "temp": "ICE"
+  },
+  "블루베리 요거트 스무디": {
+    "sku": "BLUEBERRY_YOGURT_SMOOTHIE",
+    "temp": "ICE"
+  },
+  "블베 요거트 스무디": {
+    "sku": "BLUEBERRY_YOGURT_SMOOTHIE",
+    "temp": "ICE"
+  },
+  "바닐라빈 프라페": {
+    "sku": "VANILLA_BEAN_FRAPPE",
+    "temp": "ICE"
+  },
+  "바닐라 프라페": {
+    "sku": "VANILLA_BEAN_FRAPPE",
+    "temp": "ICE"
+  },
+  "커피 프라페": {
+    "sku": "COFFEE_FRAPPE",
+    "temp": "ICE"
+  },
+  "프라푸치노": {
+    "sku": "COFFEE_FRAPPE",
+    "temp": "ICE"
+  },
+  "크로와상": {
+    "sku": "CROISSANT"
+  },
+  "크루아상": {
+    "sku": "CROISSANT"
+  },
+  "초코 케이크": {
+    "sku": "CHOCOLATE_CAKE"
+  },
+  "초코 케익": {
+    "sku": "CHOCOLATE_CAKE"
+  },
+  "뉴욕 치즈케이크": {
+    "sku": "NEWYORK_CHEESECAKE"
+  },
+  "치즈 케이크": {
+    "sku": "NEWYORK_CHEESECAKE"
+  },
+  "티라미슈": {
+    "sku": "TIRAMISU"
+  },
+  "버터 쿠키": {
+    "sku": "BUTTER_COOKIE_3PCS"
+  },
+  "초코칩 쿠키": {
+    "sku": "CHOCOCHIP_COOKIE_3PCS"
+  },
+  "베이글 크림치즈": {
+    "sku": "BAGEL_CREAMCHEESE"
+  },
+  "햄치즈 샌드": {
+    "sku": "HAM_CHEESE_SANDWICH"
+  },
+  "스몰": {
+    "size": "S"
+  },
+  "작게": {
+    "size": "S"
+  },
+  "레귤러": {
+    "size": "M"
+  },
+  "미디움": {
+    "size": "M"
+  },
+  "보통": {
     "size": "M"
   },
   "라지": {
     "size": "L"
+  },
+  "크게": {
+    "size": "L"
+  },
+  "그란데": {
+    "size": "L"
+  },
+  "벤티": {
+    "size": "L"
+  },
+  "핫": {
+    "temp": "HOT"
+  },
+  "뜨거운": {
+    "temp": "HOT"
+  },
+  "따뜻하게": {
+    "temp": "HOT"
+  },
+  "아이스": {
+    "temp": "ICE"
+  },
+  "차가운": {
+    "temp": "ICE"
+  },
+  "시원하게": {
+    "temp": "ICE"
+  },
+  "얼음 없이": {
+    "ice": "less"
+  },
+  "얼음 빼고": {
+    "ice": "less"
+  },
+  "얼음 조금": {
+    "ice": "less"
+  },
+  "얼음 적게": {
+    "ice": "less"
+  },
+  "얼음 보통": {
+    "ice": "normal"
+  },
+  "얼음 많이": {
+    "ice": "more"
+  },
+  "샷 추가": {
+    "shot": 1
+  },
+  "한 샷 더": {
+    "shot": 1
+  },
+  "두 샷 추가": {
+    "shot": 2
+  },
+  "더블샷": {
+    "shot": 2
+  },
+  "트리플샷": {
+    "shot": 3
+  },
+  "시럽 빼고": {
+    "syrup": "NONE"
   }
 }

@@ -111,6 +111,39 @@ def parse_order_items(text: str, menu_mapping: Optional[MenuMapping], aliases_ma
                     implied = (cfg.get("options") or {}) if isinstance(cfg, dict) else {}
                     for k, v in implied.items():
                         opts.setdefault(k, v)
+        # 옵션 정규화: shot "+1" -> 1 (int), size XL -> L
+        if "shot" in opts:
+            val = opts["shot"]
+            if isinstance(val, str):
+                import re as _re
+                m = _re.search(r"[-+]?\d+", val)
+                if m:
+                    try:
+                        opts["shot"] = max(0, int(m.group(0)))
+                    except ValueError:
+                        del opts["shot"]
+                else:
+                    del opts["shot"]
+            elif isinstance(val, (int,)):
+                opts["shot"] = max(0, int(val))
+            else:
+                del opts["shot"]
+        if opts.get("size") == "XL":
+            opts["size"] = "L"
+        # ice 정규화: 스키마는 소문자 ['less','normal','more']만 허용
+        if "ice" in opts:
+            val = opts["ice"]
+            if isinstance(val, str):
+                up = val.upper()
+                ice_map = {"NONE": "less", "LESS": "less", "REGULAR": "normal", "MORE": "more",
+                           "less": "less", "normal": "normal", "more": "more"}
+                norm = ice_map.get(up, ice_map.get(val, None))
+                if norm is None:
+                    del opts["ice"]
+                else:
+                    opts["ice"] = norm
+            else:
+                del opts["ice"]
         if opts:
             item["options"] = opts
         items.append(item)

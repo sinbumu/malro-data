@@ -3,7 +3,8 @@
 공공데이터(AI Hub ‘소상공인 고객 주문 질의-응답’) 원천 CSV에서 kiosk AI 서비스용 **경량 아티팩트**를 생성하는 데이터 저장소입니다.
 
 ## 산출물(Outputs)
-- `aliases.json`: 별칭·약어·구어체 정규화 사전
+- `menu.json`: 정식 메뉴(SKU/가격/옵션 허용) 런타임용 경량 JSON
+- `aliases.json`: 별칭·약어·구어체 정규화(옵션 암시 포함, 스키마 정규화 반영)
 - `few_shots.jsonl`: LLM 프롬프트용 소수 예시(ORDER_DRAFT 중심)
 - `evalset.jsonl`: 회귀 테스트용 고정 평가셋
 - `artifact_manifest.json`: 버전/해시/생성 일시
@@ -23,6 +24,7 @@ make artifacts DOMAIN=cafe
 
 ### 실행 시 생성물
 - `data/interim/{domain}_orders.csv`: 주문성 발화 필터 결과
+- `outputs/{domain}/menu.json`
 - `outputs/{domain}/aliases.json`
 - `outputs/{domain}/few_shots.jsonl`
 - `outputs/{domain}/evalset.jsonl`
@@ -112,8 +114,9 @@ make artifacts DOMAIN=cafe
 
 ## 파이프라인 개요
 - 01 Filter: `data/raw/{domain}_*.csv` 로드 → 발화자=c, QA=q + 정규식 기반 주문성 필터 → `interim`
-- 02 Aliases: 빈도+룰 기반 별칭 생성(초안) → `aliases.json`
-- 03 Few-shots: 메뉴 동의어 매핑 + 주문 동사 게이트 → 멀티 아이템/수량/옵션 파싱 → `few_shots.jsonl`
+- 02 Export Menu: `menu.{domain}.yml` → `outputs/{domain}/menu.json`
+- 02 Aliases: `aliases.{domain}.yml` → 정규화 후 `outputs/{domain}/aliases.json`
+- 03 Few-shots: 메뉴+별칭 매핑 + 주문 동사 게이트 → 멀티 아이템/수량/옵션 파싱 → `few_shots.jsonl`
 - 04 Evalset: 확실한 매칭만 골라 멀티 아이템 gold 생성 → `evalset.jsonl`
 - 05 Validate: jsonschema 검증 + `artifact_manifest.json` 기록
 
@@ -124,9 +127,10 @@ make artifacts DOMAIN=cafe
 python -m src.etl.03_build_fewshots --domain cafe --k 120 --max_ask_ratio 0.3
 ```
 
-## 앱 연동 팁
-- `outputs/{domain}/*`를 앱의 아티팩트 디렉터리에 배치하세요.
-- 주문 객체 타입은 `configs/slots.schema.json`을 기준으로 생성(TypeScript typegen 등 권장).
+## 앱 연동 팁 (MVP 서버)
+- 서버에는 outputs만 배포해도 충분합니다: `menu.json`, `aliases.json`, `artifact_manifest.json`(필수), `few_shots.jsonl`/`evalset.jsonl`(선택)
+- 메뉴 렌더/옵션 검증이 필요하면 서버에서 `menu.json`만 읽으세요(YAML은 빌드 전용).
+- 주문 객체 타입은 `configs/slots.schema.json`을 기준으로 타입 생성(서버 저장소에 스키마 복제 권장).
 - 프롬프트 템플릿에 `few_shots.jsonl`의 ORDER_DRAFT 예시를 삽입해 모델 초기 성능을 확보합니다.
 
 ## 라이선스/거버넌스

@@ -12,9 +12,13 @@
    - 키워드 게이트: `configs/patterns.yml:intents.order.include_regex`
    - 출력: `data/interim/{domain}_orders.csv`
 
-2) Aliases(02)
-   - 빈도 기반 + 고정 룰(초안)로 축약/동의 표현 수집
-   - 출력: `outputs/{domain}/aliases.json`
+2) Export Menu(02a)
+   - `configs/menu.{domain}.yml` → 런타임 친화 `outputs/{domain}/menu.json`
+   - SKU/표시명/가능 온도/사이즈/허용 옵션만 포함(가격 포함 가능)
+
+2) Aliases(02b)
+   - `configs/aliases.{domain}.yml` → 정규화 후 `outputs/{domain}/aliases.json`
+   - shot 문자열→정수, size XL→L, ice 대문자→스키마 소문자 매핑
 
 3) Few-shots(03)
    - 메뉴 매핑: `configs/menu.{domain}.yml`(정식 SKU/옵션) + `configs/aliases.{domain}.yml`(별칭/암시 옵션) 동시 로드
@@ -35,7 +39,7 @@
    - `artifact_manifest.json` 기록: domain/version/generated_at/counts/source_hash/patterns_version
 
 ## 스키마/계약
-- `configs/menu.{domain}.yml`: 정식 SKU/옵션/가격(선택) 정의(운영 원본)
+- `configs/menu.{domain}.yml`: 정식 SKU/옵션/가격(선택) 정의(운영 원본) → `menu.json`
 - `configs/aliases.{domain}.yml`: 별칭/동의어 → { sku?, options? } (옵션 단독 별칭 허용)
 - `configs/patterns.yml`: 주문성 게이트 정규식(include/exclude)
 - `configs/slots.schema.json`: 주문 JSON 스키마(앱과 공유)

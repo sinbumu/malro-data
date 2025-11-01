@@ -1,0 +1,513 @@
+{
+  "version": "0.1.0",
+  "items": [
+    {
+      "sku": "AMERICANO",
+      "display": "아메리카노",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 3500,
+        "ICE": 3800
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "decaf",
+        "syrup",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CAFE_LATTE",
+      "display": "카페라떼",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 4300,
+        "ICE": 4600
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "decaf",
+        "milk",
+        "syrup",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CAPPUCCINO",
+      "display": "카푸치노",
+      "temps": [
+        "HOT"
+      ],
+      "base_price": {
+        "HOT": 4500
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "decaf",
+        "milk",
+        "syrup",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CAFE_MOCHA",
+      "display": "카페모카",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 4800,
+        "ICE": 5100
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "decaf",
+        "milk",
+        "syrup",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "VANILLA_LATTE",
+      "display": "바닐라라떼",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 4800,
+        "ICE": 5100
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "decaf",
+        "milk",
+        "syrup",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CARAMEL_MACCHIATO",
+      "display": "카라멜 마키아토",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 5200,
+        "ICE": 5500
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "decaf",
+        "milk",
+        "syrup",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "ESPRESSO",
+      "display": "에스프레소",
+      "temps": [
+        "HOT"
+      ],
+      "base_price": {
+        "HOT": 3000
+      },
+      "sizes_enabled": false,
+      "allow_options": [
+        "order_type"
+      ]
+    },
+    {
+      "sku": "COLD_BREW",
+      "display": "콜드브루",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 4500
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "COLD_BREW_LATTE",
+      "display": "콜드브루 라떼",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 5000
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "milk",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "MATCHA_LATTE",
+      "display": "말차라떼",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 5000,
+        "ICE": 5300
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "milk",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "HOJICHA_LATTE",
+      "display": "호지차라떼",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 5200,
+        "ICE": 5500
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "milk",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "SWEET_POTATO_LATTE",
+      "display": "고구마라떼",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 5000,
+        "ICE": 5300
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "milk",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CHAI_LATTE",
+      "display": "차이라떼",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 4800,
+        "ICE": 5100
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "milk",
+        "ice",
+        "sweetness",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "EARL_GREY_TEA",
+      "display": "얼그레이 티",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 4000,
+        "ICE": 4300
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "GREEN_TEA",
+      "display": "그린 티",
+      "temps": [
+        "HOT",
+        "ICE"
+      ],
+      "base_price": {
+        "HOT": 4000,
+        "ICE": 4300
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CHAMOMILE_TEA",
+      "display": "캐모마일 티",
+      "temps": [
+        "HOT"
+      ],
+      "base_price": {
+        "HOT": 4000
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "order_type"
+      ]
+    },
+    {
+      "sku": "PEACH_ICED_TEA",
+      "display": "복숭아 아이스티",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 4300
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "LEMON_ADE",
+      "display": "레몬에이드",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 5200
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "GRAPEFRUIT_ADE",
+      "display": "자몽에이드",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 5500
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "LIME_MINT_ADE",
+      "display": "라임 민트에이드",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 5800
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "STRAWBERRY_BANANA_SMOOTHIE",
+      "display": "딸기바나나 스무디",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 5900
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "MANGO_SMOOTHIE",
+      "display": "망고 스무디",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 5900
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "BLUEBERRY_YOGURT_SMOOTHIE",
+      "display": "블루베리 요거트 스무디",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 6200
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "VANILLA_BEAN_FRAPPE",
+      "display": "바닐라빈 프라페",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 6000
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "COFFEE_FRAPPE",
+      "display": "커피 프라페",
+      "temps": [
+        "ICE"
+      ],
+      "base_price": {
+        "ICE": 6200
+      },
+      "sizes_enabled": true,
+      "allow_options": [
+        "shot",
+        "sweetness",
+        "ice",
+        "order_type"
+      ]
+    },
+    {
+      "sku": "CROISSANT",
+      "display": "크루아상",
+      "base_price": {
+        "HOT": 3200
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "CHOCOLATE_CAKE",
+      "display": "초코 케이크",
+      "base_price": {
+        "HOT": 5800
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "NEWYORK_CHEESECAKE",
+      "display": "뉴욕 치즈케이크",
+      "base_price": {
+        "HOT": 6000
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "TIRAMISU",
+      "display": "티라미수",
+      "base_price": {
+        "HOT": 6200
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "BUTTER_COOKIE_3PCS",
+      "display": "버터 쿠키(3pcs)",
+      "base_price": {
+        "HOT": 3000
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "CHOCOCHIP_COOKIE_3PCS",
+      "display": "초코칩 쿠키(3pcs)",
+      "base_price": {
+        "HOT": 3200
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "BAGEL_CREAMCHEESE",
+      "display": "베이글(크림치즈)",
+      "base_price": {
+        "HOT": 3800
+      },
+      "sizes_enabled": false
+    },
+    {
+      "sku": "HAM_CHEESE_SANDWICH",
+      "display": "햄치즈 샌드위치",
+      "base_price": {
+        "HOT": 5200
+      },
+      "sizes_enabled": false
+    }
+  ]
+}

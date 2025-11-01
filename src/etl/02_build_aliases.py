@@ -1,35 +1,53 @@
 from __future__ import annotations
 
 import argparse
-import json
-from collections import Counter
 from pathlib import Path
 from typing import Dict
 
-import pandas as pd
+from src.utils.io import Paths, write_json
+from src.utils.menu import load_aliases_map
 
-from src.utils.io import Paths, load_yaml, write_json
 
-
-def extract_alias_candidates(df: pd.DataFrame) -> Dict[str, dict]:
-    # 간단한 휴리스틱: 상위 빈도 축약어 매핑 예시(도메인별 강화 가능)
-    text_col = df["발화문"].astype(str).fillna("")
-    tokens = []
-    for t in text_col:
-        tokens.extend(t.replace("/", " ").split())
-    freq = Counter(tokens)
-    aliases: Dict[str, dict] = {}
-    # 대표 축약 예시 고정 룰(초안)
-    rules = {
-        "아아": {"sku": "AMERICANO", "temp": "ICE"},
-        "뜨아": {"sku": "AMERICANO", "temp": "HOT"},
-        "톨": {"size": "M"},
-        "라지": {"size": "L"},
-    }
-    for k, v in rules.items():
-        if freq.get(k, 0) > 0:
-            aliases[k] = v
-    return aliases
+def _normalize_alias_apply(apply: dict) -> dict:
+    out: Dict[str, object] = {}
+    # sku
+    sku = apply.get("sku")
+    if isinstance(sku, str):
+        out["sku"] = sku
+    # options
+    opts = apply.get("options") or {}
+    if isinstance(opts, dict):
+        # 화이트리스트만 허용 (slots.schema.json 호환)
+        allowed = {"size", "temp", "shot", "syrup", "ice"}
+        norm: Dict[str, object] = {}
+        for k, v in opts.items():
+            if k not in allowed:
+                continue
+            if k == "shot":
+                # "+1" -> 1
+                if isinstance(v, str):
+                    import re
+                    m = re.search(r"[-+]?\d+", v)
+                    if m:
+                        try:
+                            norm[k] = max(0, int(m.group(0)))
+                        except ValueError:
+                            pass
+                elif isinstance(v, int):
+                    norm[k] = max(0, v)
+            elif k == "size":
+                norm[k] = "L" if v == "XL" else v
+            elif k == "ice":
+                if isinstance(v, str):
+                    up = v.upper()
+                    mp = {"NONE": "less", "LESS": "less", "REGULAR": "normal", "MORE": "more",
+                          "less": "less", "normal": "normal", "more": "more"}
+                    if up in mp or v in mp:
+                        norm[k] = mp.get(up, mp.get(v))
+            else:
+                norm[k] = v
+        out.update(norm)
+    return out
 
 
 def main() -> None:
@@ -38,20 +56,19 @@ def main() -> None:
     args = parser.parse_args()
 
     paths = Paths(root=Path(__file__).resolve().parents[2])
-    interim = paths.data_interim / f"{args.domain}_orders.csv"
-    if not interim.exists():
-        raise FileNotFoundError(f"missing interim file: {interim}")
-    df = pd.read_csv(interim)
+    aliases_map = load_aliases_map(paths.configs / f"aliases.{args.domain}.yml")
 
-    cfg_patterns = load_yaml(paths.configs / "patterns.yml")
-    _ = cfg_patterns  # reserved for future advanced rules
-
-    aliases = extract_alias_candidates(df)
+    out_obj: Dict[str, dict] = {}
+    for term, apply in aliases_map.items():
+        normalized = _normalize_alias_apply(apply)
+        if not normalized:
+            continue
+        out_obj[term] = normalized
 
     out_dir = paths.outputs / args.domain
     out_dir.mkdir(parents=True, exist_ok=True)
-    write_json(out_dir / "aliases.json", aliases)
-    print(f"[Aliases] saved {len(aliases)} aliases -> {out_dir / 'aliases.json'}")
+    write_json(out_dir / "aliases.json", out_obj)
+    print(f"[Aliases] saved {len(out_obj)} aliases -> {out_dir / 'aliases.json'}")
 
 
 if __name__ == "__main__":

@@ -1,20 +1,389 @@
-version: "0.2.0"
-sku:
-  AMERICANO:
+domain: cafe
+version: "0.1.0"
+currency: KRW
+
+# 공통 사이즈/옵션 정책 (메뉴별로 override 가능)
+sizes:
+  enabled_by_default: true
+  default: M
+  steps:         # 사이즈별 추가 금액
+    S: 0
+    M: 500
+    L: 1000
+
+options:
+  shot:          # 추가 샷(에스프레소 베이스/라떼에만 적용 권장)
+    type: integer
+    min: 0
+    max: 3
+    price_per: 500
+    applies_to_tags: [espresso_based, latte_based]
+  decaf:
+    type: enum
+    allowed: [NONE, HALF, FULL]
+    price_map:
+      HALF: 500
+      FULL: 500
+    applies_to_tags: [espresso_based, latte_based]
+  milk:          # 우유 선택(라떼류/밀크베이스)
+    type: enum
+    allowed: [WHOLE, LOWFAT, NONFAT, SOY, OAT, ALMOND]
+    price_map: { SOY: 500, OAT: 700, ALMOND: 700 }
+    applies_to_tags: [latte_based, milk_based]
+  syrup:         # 시럽 추가(일부 커피/라떼)
+    type: enum_multi
+    allowed: [VANILLA, CARAMEL, HAZELNUT, MOCHA]
+    price_per: 500
+    applies_to_tags: [espresso_based, latte_based]
+  sweetness:     # 당도(논커피/티/에이드/스무디에 주로)
+    type: enum
+    allowed: [LESS, REGULAR, MORE]
+    applies_to_tags: [ade, smoothie, latte_based, tea_latte]
+  ice:           # 얼음(ICE 음료에만)
+    type: enum
+    allowed: [NONE, LESS, REGULAR, MORE]
+    applies_to_tags: [iced]
+  order_type:    # 매장/포장
+    type: enum
+    allowed: [DINE_IN, TAKE_OUT]
+    applies_to_tags: [beverage]
+
+# 음료/디저트 공통 속성:
+# - base_price: {HOT: ####, ICE: ####}  (해당 온도만 표기)
+# - temps: [HOT|ICE]  (가능 온도)
+# - sizes_enabled: true|false
+# - allow_options / deny_options: [shot, milk, ...]  (필요 시 제한)
+# - tags: 라우팅/정책에 사용 (espresso_based, latte_based, milk_based, tea, tea_latte, ade, smoothie, iced, beverage, dessert 등)
+
+items:
+  # -------------------
+  # Coffee (Espresso 기반)
+  # -------------------
+  - sku: AMERICANO
     display: "아메리카노"
-    synonyms: ["아이스 아메리카노", "아아", "뜨아", "아메리카노"]
-    options:
-      size: [S, M, L]
-      temp: [ICE, HOT]
-  LATTE:
+    alt: ["Americano"]
+    category: coffee
+    tags: [beverage, espresso_based]
+    temps: [HOT, ICE]
+    base_price: { HOT: 3500, ICE: 3800 }
+    allow_options: [shot, decaf, syrup, ice, order_type]
+    sizes_enabled: true
+
+  - sku: CAFE_LATTE
     display: "카페라떼"
-    synonyms: ["라떼", "카페라떼", "카페 라떼", "라떼 아이스", "아이스 라떼", "뜨거운 라떼"]
-    options:
-      size: [S, M, L]
-      temp: [ICE, HOT]
-  VANILLA_LATTE:
-    display: "바닐라 라떼"
-    synonyms: ["바닐라라떼", "아이스 바닐라라떼", "바닐라 라떼"]
-    options:
-      size: [S, M, L]
-      temp: [ICE, HOT]
+    alt: ["Latte", "Cafe Latte"]
+    category: coffee
+    tags: [beverage, espresso_based, latte_based, milk_based]
+    temps: [HOT, ICE]
+    base_price: { HOT: 4300, ICE: 4600 }
+    allow_options: [shot, decaf, milk, syrup, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: CAPPUCCINO
+    display: "카푸치노"
+    alt: ["Cappuccino"]
+    category: coffee
+    tags: [beverage, espresso_based, latte_based, milk_based]
+    temps: [HOT]
+    base_price: { HOT: 4500 }
+    allow_options: [shot, decaf, milk, syrup, order_type]
+    sizes_enabled: true
+
+  - sku: CAFE_MOCHA
+    display: "카페모카"
+    alt: ["Cafe Mocha", "Mocha"]
+    category: coffee
+    tags: [beverage, espresso_based, latte_based, milk_based]
+    temps: [HOT, ICE]
+    base_price: { HOT: 4800, ICE: 5100 }
+    allow_options: [shot, decaf, milk, syrup, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: VANILLA_LATTE
+    display: "바닐라라떼"
+    alt: ["Vanilla Latte"]
+    category: coffee
+    tags: [beverage, espresso_based, latte_based, milk_based]
+    temps: [HOT, ICE]
+    base_price: { HOT: 4800, ICE: 5100 }
+    allow_options: [shot, decaf, milk, syrup, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: CARAMEL_MACCHIATO
+    display: "카라멜 마키아토"
+    alt: ["Caramel Macchiato"]
+    category: coffee
+    tags: [beverage, espresso_based, latte_based, milk_based]
+    temps: [HOT, ICE]
+    base_price: { HOT: 5200, ICE: 5500 }
+    allow_options: [shot, decaf, milk, syrup, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: ESPRESSO
+    display: "에스프레소"
+    alt: ["Espresso", "Solo"]
+    category: coffee
+    tags: [beverage, espresso_based]
+    temps: [HOT]
+    base_price: { HOT: 3000 }
+    allow_options: [order_type]
+    sizes_enabled: false
+
+  - sku: COLD_BREW
+    display: "콜드브루"
+    alt: ["Cold Brew"]
+    category: coffee
+    tags: [beverage, espresso_based, iced]
+    temps: [ICE]
+    base_price: { ICE: 4500 }
+    allow_options: [ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: COLD_BREW_LATTE
+    display: "콜드브루 라떼"
+    alt: ["Cold Brew Latte"]
+    category: coffee
+    tags: [beverage, espresso_based, latte_based, milk_based, iced]
+    temps: [ICE]
+    base_price: { ICE: 5000 }
+    allow_options: [milk, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  # -------------------
+  # Non-Coffee Latte
+  # -------------------
+  - sku: MATCHA_LATTE
+    display: "말차라떼"
+    alt: ["Matcha Latte", "Green Tea Latte"]
+    category: non_coffee_latte
+    tags: [beverage, milk_based, tea_latte]
+    temps: [HOT, ICE]
+    base_price: { HOT: 5000, ICE: 5300 }
+    allow_options: [milk, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: HOJICHA_LATTE
+    display: "호지차라떼"
+    alt: ["Hojicha Latte", "Roasted Green Tea Latte"]
+    category: non_coffee_latte
+    tags: [beverage, milk_based, tea_latte]
+    temps: [HOT, ICE]
+    base_price: { HOT: 5200, ICE: 5500 }
+    allow_options: [milk, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: SWEET_POTATO_LATTE
+    display: "고구마라떼"
+    alt: ["Sweet Potato Latte"]
+    category: non_coffee_latte
+    tags: [beverage, milk_based]
+    temps: [HOT, ICE]
+    base_price: { HOT: 5000, ICE: 5300 }
+    allow_options: [milk, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  - sku: CHAI_LATTE
+    display: "차이라떼"
+    alt: ["Chai Latte", "Masala Chai Latte"]
+    category: non_coffee_latte
+    tags: [beverage, milk_based, tea_latte]
+    temps: [HOT, ICE]
+    base_price: { HOT: 4800, ICE: 5100 }
+    allow_options: [milk, ice, sweetness, order_type]
+    sizes_enabled: true
+
+  # -------------------
+  # Tea
+  # -------------------
+  - sku: EARL_GREY_TEA
+    display: "얼그레이 티"
+    alt: ["Earl Grey Tea"]
+    category: tea
+    tags: [beverage, tea]
+    temps: [HOT, ICE]
+    base_price: { HOT: 4000, ICE: 4300 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: GREEN_TEA
+    display: "그린 티"
+    alt: ["Green Tea"]
+    category: tea
+    tags: [beverage, tea]
+    temps: [HOT, ICE]
+    base_price: { HOT: 4000, ICE: 4300 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: CHAMOMILE_TEA
+    display: "캐모마일 티"
+    alt: ["Chamomile Tea"]
+    category: tea
+    tags: [beverage, tea]
+    temps: [HOT]
+    base_price: { HOT: 4000 }
+    allow_options: [order_type]
+    sizes_enabled: true
+
+  - sku: PEACH_ICED_TEA
+    display: "복숭아 아이스티"
+    alt: ["Peach Iced Tea"]
+    category: tea
+    tags: [beverage, tea, iced]
+    temps: [ICE]
+    base_price: { ICE: 4300 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  # -------------------
+  # Ade
+  # -------------------
+  - sku: LEMON_ADE
+    display: "레몬에이드"
+    alt: ["Lemon Ade"]
+    category: ade
+    tags: [beverage, ade, iced]
+    temps: [ICE]
+    base_price: { ICE: 5200 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: GRAPEFRUIT_ADE
+    display: "자몽에이드"
+    alt: ["Grapefruit Ade"]
+    category: ade
+    tags: [beverage, ade, iced]
+    temps: [ICE]
+    base_price: { ICE: 5500 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: LIME_MINT_ADE
+    display: "라임 민트에이드"
+    alt: ["Lime Mint Ade", "Mojito(non-alcohol)"]
+    category: ade
+    tags: [beverage, ade, iced]
+    temps: [ICE]
+    base_price: { ICE: 5800 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  # -------------------
+  # Smoothie / Frappe
+  # -------------------
+  - sku: STRAWBERRY_BANANA_SMOOTHIE
+    display: "딸기바나나 스무디"
+    alt: ["Strawberry Banana Smoothie"]
+    category: smoothie
+    tags: [beverage, smoothie, iced]
+    temps: [ICE]
+    base_price: { ICE: 5900 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: MANGO_SMOOTHIE
+    display: "망고 스무디"
+    alt: ["Mango Smoothie"]
+    category: smoothie
+    tags: [beverage, smoothie, iced]
+    temps: [ICE]
+    base_price: { ICE: 5900 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: BLUEBERRY_YOGURT_SMOOTHIE
+    display: "블루베리 요거트 스무디"
+    alt: ["Blueberry Yogurt Smoothie"]
+    category: smoothie
+    tags: [beverage, smoothie, iced, milk_based]
+    temps: [ICE]
+    base_price: { ICE: 6200 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: VANILLA_BEAN_FRAPPE
+    display: "바닐라빈 프라페"
+    alt: ["Vanilla Bean Frappe"]
+    category: smoothie
+    tags: [beverage, smoothie, iced, milk_based]
+    temps: [ICE]
+    base_price: { ICE: 6000 }
+    allow_options: [sweetness, ice, order_type]
+    sizes_enabled: true
+
+  - sku: COFFEE_FRAPPE
+    display: "커피 프라페"
+    alt: ["Coffee Frappe"]
+    category: smoothie
+    tags: [beverage, smoothie, iced, espresso_based, milk_based]
+    temps: [ICE]
+    base_price: { ICE: 6200 }
+    allow_options: [shot, sweetness, ice, order_type]
+    sizes_enabled: true
+
+  # -------------------
+  # Dessert / Bakery
+  # -------------------
+  - sku: CROISSANT
+    display: "크루아상"
+    alt: ["Croissant"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 3200 }   # 온도/사이즈 개념 없음 → HOT만으로 표기
+    sizes_enabled: false
+
+  - sku: CHOCOLATE_CAKE
+    display: "초코 케이크"
+    alt: ["Chocolate Cake"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 5800 }
+    sizes_enabled: false
+
+  - sku: NEWYORK_CHEESECAKE
+    display: "뉴욕 치즈케이크"
+    alt: ["New York Cheesecake"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 6000 }
+    sizes_enabled: false
+
+  - sku: TIRAMISU
+    display: "티라미수"
+    alt: ["Tiramisu"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 6200 }
+    sizes_enabled: false
+
+  - sku: BUTTER_COOKIE_3PCS
+    display: "버터 쿠키(3pcs)"
+    alt: ["Butter Cookie"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 3000 }
+    sizes_enabled: false
+
+  - sku: CHOCOCHIP_COOKIE_3PCS
+    display: "초코칩 쿠키(3pcs)"
+    alt: ["Chocochip Cookie"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 3200 }
+    sizes_enabled: false
+
+  - sku: BAGEL_CREAMCHEESE
+    display: "베이글(크림치즈)"
+    alt: ["Bagel with Cream Cheese"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 3800 }
+    sizes_enabled: false
+
+  - sku: HAM_CHEESE_SANDWICH
+    display: "햄치즈 샌드위치"
+    alt: ["Ham & Cheese Sandwich"]
+    category: dessert
+    tags: [dessert]
+    base_price: { HOT: 5200 }
+    sizes_enabled: false

@@ -16,10 +16,35 @@ class MenuMapping:
 
 
 def load_menu_mapping(menu_yaml_path: Path) -> MenuMapping:
-    data = load_yaml(menu_yaml_path)
+    data = load_yaml(menu_yaml_path) or {}
     sku_to_phrases: Dict[str, List[str]] = {}
     phrase_to_sku: Dict[str, str] = {}
-    for sku, meta in data.get("sku", {}).items():
+
+    # 1) 신형 스키마: items: [ { sku, display, alt: [] } ]
+    items = data.get("items")
+    if isinstance(items, list) and items:
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            sku = it.get("sku")
+            if not sku:
+                continue
+            phrases: List[str] = []
+            disp = it.get("display")
+            if isinstance(disp, str) and disp:
+                phrases.append(disp)
+            alt = it.get("alt") or []
+            if isinstance(alt, list):
+                phrases.extend([a for a in alt if isinstance(a, str)])
+            # 고유화/정리
+            norm_phrases = sorted(set(p.strip() for p in phrases if p and isinstance(p, str)))
+            sku_to_phrases[sku] = norm_phrases
+            for ph in norm_phrases:
+                phrase_to_sku[ph] = sku
+        return MenuMapping(phrase_to_sku=phrase_to_sku, sku_to_phrases=sku_to_phrases)
+
+    # 2) 구형 스키마: sku: { SKU: { display, synonyms: [] } }
+    for sku, meta in (data.get("sku", {}) or {}).items():
         phrases = list({meta.get("display", sku)})
         phrases.extend(meta.get("synonyms", []) or [])
         norm_phrases = sorted(set(p.strip() for p in phrases if p and isinstance(p, str)))
@@ -33,7 +58,24 @@ def load_aliases_map(aliases_yaml_path: Path) -> Dict[str, dict]:
     if not aliases_yaml_path.exists():
         return {}
     data = load_yaml(aliases_yaml_path) or {}
-    return {k: v for k, v in (data.get("aliases", {}) or {}).items() if isinstance(v, dict)}
+    raw_aliases = data.get("aliases", {})
+    mapping: Dict[str, dict] = {}
+    # 신형: aliases: [ { term: str, apply: { sku?, options? }, meta? } ]
+    if isinstance(raw_aliases, list):
+        for entry in raw_aliases:
+            if not isinstance(entry, dict):
+                continue
+            term = entry.get("term")
+            apply = entry.get("apply") or {}
+            if isinstance(term, str) and isinstance(apply, dict) and term:
+                mapping[term] = apply
+        return mapping
+    # 구형: aliases: { phrase: { sku?, options? } }
+    if isinstance(raw_aliases, dict):
+        for k, v in raw_aliases.items():
+            if isinstance(k, str) and isinstance(v, dict):
+                mapping[k] = v
+    return mapping
 
 
 def load_combined_mapping(menu_yaml_path: Path, aliases_yaml_path: Optional[Path] = None) -> MenuMapping:

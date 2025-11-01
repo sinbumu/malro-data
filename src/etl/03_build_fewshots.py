@@ -40,12 +40,25 @@ def main() -> None:
     df = pd.read_csv(interim)
     aliases_map = load_aliases_map(paths.configs / f"aliases.{args.domain}.yml")
     menu_mapping = load_combined_mapping(paths.configs / f"menu.{args.domain}.yml", paths.configs / f"aliases.{args.domain}.yml")
-    patterns = load_yaml(paths.configs / "patterns.yml")
+    patterns = load_yaml(paths.configs / "patterns.yml") or {}
 
     import re
-    order_regexes = [re.compile(p) for p in (patterns.get("intents", {}).get("order", {}).get("include_regex", []) or [])]
+    # 새로운 구조: filters.order_gate_regex 또는 filters.order_keywords 사용
+    filters = patterns.get("filters", {}) or {}
+    gate_pat = filters.get("order_gate_regex")
+    order_keywords = filters.get("order_keywords") or []
+    if gate_pat:
+        order_regexes = [re.compile(gate_pat)]
+    else:
+        if order_keywords:
+            safe = [re.escape(k) for k in order_keywords if isinstance(k, str)]
+            order_regexes = [re.compile("(?:" + "|".join(safe) + ")")]
+        else:
+            order_regexes = []
 
     def is_order_text(text: str) -> bool:
+        if not order_regexes:
+            return True
         t = str(text)
         return any(r.search(t) for r in order_regexes)
 

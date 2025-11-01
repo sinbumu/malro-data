@@ -1,12 +1,528 @@
-version: "0.1.0"
 aliases:
-  # 메뉴 별칭(암시 옵션 포함 가능)
-  "아아": { sku: AMERICANO, options: { temp: ICE } }
-  "뜨아": { sku: AMERICANO, options: { temp: HOT } }
-  "바닐라라떼": { sku: VANILLA_LATTE }
+  # ----------------------------
+  # SKU-specific (Coffee/Espresso)
+  # ----------------------------
+  - term: "아아"
+    apply: { sku: "AMERICANO", options: { temp: "ICE" } }
+    meta: { kind: "abbr", confidence: 0.98, note: "아이스 아메리카노" }
 
-  # 옵션 단독 별칭(메뉴 없이 옵션만 암시)
-  "톨": { options: { size: M } }
-  "라지": { options: { size: L } }
-  "벤티": { options: { size: L } }
+  - term: "뜨아"
+    apply: { sku: "AMERICANO", options: { temp: "HOT" } }
+    meta: { kind: "abbr", confidence: 0.98, note: "뜨거운 아메리카노" }
 
+  - term: "아메"
+    apply: { sku: "AMERICANO" }
+    meta: { kind: "variant", confidence: 0.9 }
+
+  - term: "아메리 카노"
+    apply: { sku: "AMERICANO" }
+    meta: { kind: "stt_space", confidence: 0.75 }
+
+  - term: "americano"
+    apply: { sku: "AMERICANO" }
+    meta: { kind: "en", confidence: 0.85 }
+
+  - term: "카페 라떼"
+    apply: { sku: "CAFE_LATTE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "라떼"
+    apply: { sku: "CAFE_LATTE" }
+    meta: { kind: "generic", confidence: 0.85 }
+
+  - term: "라테"
+    apply: { sku: "CAFE_LATTE" }
+    meta: { kind: "typo", confidence: 0.8 }
+
+  - term: "아라"
+    apply: { sku: "CAFE_LATTE", options: { temp: "ICE" } }
+    meta: { kind: "abbr", confidence: 0.9, note: "아이스 라떼" }
+
+  - term: "핫라떼"
+    apply: { sku: "CAFE_LATTE", options: { temp: "HOT" } }
+    meta: { kind: "phrase", confidence: 0.9 }
+
+  - term: "아이스 라떼"
+    apply: { sku: "CAFE_LATTE", options: { temp: "ICE" } }
+    meta: { kind: "phrase", confidence: 0.95 }
+
+  - term: "카푸치노"
+    apply: { sku: "CAPPUCCINO" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "카프치노"
+    apply: { sku: "CAPPUCCINO" }
+    meta: { kind: "typo", confidence: 0.75 }
+
+  - term: "카푸치오노"
+    apply: { sku: "CAPPUCCINO" }
+    meta: { kind: "typo", confidence: 0.7 }
+
+  - term: "모카"
+    apply: { sku: "CAFE_MOCHA" }
+    meta: { kind: "variant", confidence: 0.9 }
+
+  - term: "카페 모카"
+    apply: { sku: "CAFE_MOCHA" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "바닐라 라떼"
+    apply: { sku: "VANILLA_LATTE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "바닐라라테"
+    apply: { sku: "VANILLA_LATTE" }
+    meta: { kind: "typo", confidence: 0.85 }
+
+  - term: "바라"
+    apply: { sku: "VANILLA_LATTE" }
+    meta: { kind: "abbr", confidence: 0.85, note: "바닐라 라떼" }
+
+  - term: "카라멜 마키아토"
+    apply: { sku: "CARAMEL_MACCHIATO" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "카라멜 마끼아또"
+    apply: { sku: "CARAMEL_MACCHIATO" }
+    meta: { kind: "typo", confidence: 0.88 }
+
+  - term: "카라멜 마끼아토"
+    apply: { sku: "CARAMEL_MACCHIATO" }
+    meta: { kind: "typo", confidence: 0.86 }
+
+  - term: "카라멜 마키야또"
+    apply: { sku: "CARAMEL_MACCHIATO" }
+    meta: { kind: "typo", confidence: 0.82 }
+
+  - term: "카라멜마끼"
+    apply: { sku: "CARAMEL_MACCHIATO" }
+    meta: { kind: "abbr", confidence: 0.75 }
+
+  - term: "카마"
+    apply: { sku: "CARAMEL_MACCHIATO" }
+    meta: { kind: "abbr", confidence: 0.7 }
+
+  - term: "에스프레쏘"
+    apply: { sku: "ESPRESSO" }
+    meta: { kind: "typo", confidence: 0.9 }
+
+  - term: "에스프레소"
+    apply: { sku: "ESPRESSO" }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "엑스프레소"
+    apply: { sku: "ESPRESSO" }
+    meta: { kind: "stt_confusion", confidence: 0.7 }
+
+  - term: "에쏘"
+    apply: { sku: "ESPRESSO" }
+    meta: { kind: "abbr", confidence: 0.8 }
+
+  - term: "콜드 브루"
+    apply: { sku: "COLD_BREW" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "콜드브루"
+    apply: { sku: "COLD_BREW" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "콜브루"
+    apply: { sku: "COLD_BREW" }
+    meta: { kind: "abbr", confidence: 0.85 }
+
+  - term: "콜부"
+    apply: { sku: "COLD_BREW" }
+    meta: { kind: "abbr", confidence: 0.7 }
+
+  - term: "콜드브루 라떼"
+    apply: { sku: "COLD_BREW_LATTE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "콜브루 라떼"
+    apply: { sku: "COLD_BREW_LATTE" }
+    meta: { kind: "abbr", confidence: 0.85 }
+
+  - term: "콜 라떼"
+    apply: { sku: "COLD_BREW_LATTE" }
+    meta: { kind: "stt_space", confidence: 0.7 }
+
+  # ----------------------------
+  # SKU-specific (Non-coffee latte)
+  # ----------------------------
+  - term: "말차 라떼"
+    apply: { sku: "MATCHA_LATTE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "그린티 라떼"
+    apply: { sku: "MATCHA_LATTE" }
+    meta: { kind: "variant", confidence: 0.85 }
+
+  - term: "녹차 라떼"
+    apply: { sku: "MATCHA_LATTE" }
+    meta: { kind: "variant", confidence: 0.85 }
+
+  - term: "호지 라떼"
+    apply: { sku: "HOJICHA_LATTE" }
+    meta: { kind: "variant", confidence: 0.8 }
+
+  - term: "호지차 라떼"
+    apply: { sku: "HOJICHA_LATTE" }
+    meta: { kind: "variant", confidence: 0.9 }
+
+  - term: "고구마 라떼"
+    apply: { sku: "SWEET_POTATO_LATTE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "자색 고구마 라떼"
+    apply: { sku: "SWEET_POTATO_LATTE" }
+    meta: { kind: "variant", confidence: 0.75 }
+
+  - term: "차이 라떼"
+    apply: { sku: "CHAI_LATTE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "차이티 라떼"
+    apply: { sku: "CHAI_LATTE" }
+    meta: { kind: "variant", confidence: 0.9 }
+
+  - term: "마살라 차이 라떼"
+    apply: { sku: "CHAI_LATTE" }
+    meta: { kind: "variant", confidence: 0.75 }
+
+  # ----------------------------
+  # SKU-specific (Tea)
+  # ----------------------------
+  - term: "얼그레이"
+    apply: { sku: "EARL_GREY_TEA" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "얼그레이 티"
+    apply: { sku: "EARL_GREY_TEA" }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "홍차"
+    apply: { sku: "EARL_GREY_TEA" }
+    meta: { kind: "generic", confidence: 0.6, note: "가게에 홍차 단일 메뉴가 얼그레이일 때만 적합" }
+
+  - term: "그린 티"
+    apply: { sku: "GREEN_TEA" }
+    meta: { kind: "variant", confidence: 0.9 }
+
+  - term: "녹차"
+    apply: { sku: "GREEN_TEA" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "캐모마일"
+    apply: { sku: "CHAMOMILE_TEA" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "카모마일"
+    apply: { sku: "CHAMOMILE_TEA" }
+    meta: { kind: "typo", confidence: 0.85 }
+
+  - term: "복숭아 아이스티"
+    apply: { sku: "PEACH_ICED_TEA", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "피치 아이스티"
+    apply: { sku: "PEACH_ICED_TEA", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.85 }
+
+  - term: "아이스티"
+    apply: { sku: "PEACH_ICED_TEA", options: { temp: "ICE" } }
+    meta: { kind: "generic", confidence: 0.8 }
+
+  # ----------------------------
+  # SKU-specific (Ade)
+  # ----------------------------
+  - term: "레몬 에이드"
+    apply: { sku: "LEMON_ADE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "레모네이드"
+    apply: { sku: "LEMON_ADE", options: { temp: "ICE" } }
+    meta: { kind: "typo", confidence: 0.85 }
+
+  - term: "자몽 에이드"
+    apply: { sku: "GRAPEFRUIT_ADE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "그레이프프루트 에이드"
+    apply: { sku: "GRAPEFRUIT_ADE", options: { temp: "ICE" } }
+    meta: { kind: "en_kor", confidence: 0.7 }
+
+  - term: "라임 민트 에이드"
+    apply: { sku: "LIME_MINT_ADE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "모히또"
+    apply: { sku: "LIME_MINT_ADE", options: { temp: "ICE" } }
+    meta: { kind: "generic", confidence: 0.75, note: "무알콜 모히토 이미지" }
+
+  - term: "모히토"
+    apply: { sku: "LIME_MINT_ADE", options: { temp: "ICE" } }
+    meta: { kind: "generic", confidence: 0.75 }
+
+  # ----------------------------
+  # SKU-specific (Smoothie/Frappe)
+  # ----------------------------
+  - term: "딸기 바나나 스무디"
+    apply: { sku: "STRAWBERRY_BANANA_SMOOTHIE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "딸바 스무디"
+    apply: { sku: "STRAWBERRY_BANANA_SMOOTHIE", options: { temp: "ICE" } }
+    meta: { kind: "abbr", confidence: 0.85 }
+
+  - term: "딸바"
+    apply: { sku: "STRAWBERRY_BANANA_SMOOTHIE", options: { temp: "ICE" } }
+    meta: { kind: "abbr", confidence: 0.75 }
+
+  - term: "망고 스무디"
+    apply: { sku: "MANGO_SMOOTHIE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "블루베리 요거트 스무디"
+    apply: { sku: "BLUEBERRY_YOGURT_SMOOTHIE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.98 }
+
+  - term: "블베 요거트 스무디"
+    apply: { sku: "BLUEBERRY_YOGURT_SMOOTHIE", options: { temp: "ICE" } }
+    meta: { kind: "abbr", confidence: 0.8 }
+
+  - term: "바닐라빈 프라페"
+    apply: { sku: "VANILLA_BEAN_FRAPPE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "바닐라 프라페"
+    apply: { sku: "VANILLA_BEAN_FRAPPE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.8 }
+
+  - term: "커피 프라페"
+    apply: { sku: "COFFEE_FRAPPE", options: { temp: "ICE" } }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "프라푸치노"
+    apply: { sku: "COFFEE_FRAPPE", options: { temp: "ICE" } }
+    meta: { kind: "generic", confidence: 0.7, note: "브랜드 계열 일반화 표현" }
+
+  # ----------------------------
+  # SKU-specific (Dessert/Bakery)
+  # ----------------------------
+  - term: "크로와상"
+    apply: { sku: "CROISSANT" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "크루아상"
+    apply: { sku: "CROISSANT" }
+    meta: { kind: "typo", confidence: 0.9 }
+
+  - term: "초코 케이크"
+    apply: { sku: "CHOCOLATE_CAKE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "초코 케익"
+    apply: { sku: "CHOCOLATE_CAKE" }
+    meta: { kind: "typo", confidence: 0.85 }
+
+  - term: "뉴욕 치즈케이크"
+    apply: { sku: "NEWYORK_CHEESECAKE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "치즈 케이크"
+    apply: { sku: "NEWYORK_CHEESECAKE" }
+    meta: { kind: "generic", confidence: 0.75 }
+
+  - term: "티라미슈"
+    apply: { sku: "TIRAMISU" }
+    meta: { kind: "typo", confidence: 0.75 }
+
+  - term: "버터 쿠키"
+    apply: { sku: "BUTTER_COOKIE_3PCS" }
+    meta: { kind: "variant", confidence: 0.9 }
+
+  - term: "초코칩 쿠키"
+    apply: { sku: "CHOCOCHIP_COOKIE_3PCS" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "베이글 크림치즈"
+    apply: { sku: "BAGEL_CREAMCHEESE" }
+    meta: { kind: "variant", confidence: 0.95 }
+
+  - term: "햄치즈 샌드"
+    apply: { sku: "HAM_CHEESE_SANDWICH" }
+    meta: { kind: "abbr", confidence: 0.8 }
+
+  # ----------------------------
+  # GLOBAL: Size (maps to sizes.steps policy)
+  # ----------------------------
+  - term: "스몰"
+    apply: { options: { size: "S" } }
+    meta: { kind: "size", confidence: 0.95 }
+
+  - term: "작게"
+    apply: { options: { size: "S" } }
+    meta: { kind: "size_phrase", confidence: 0.8 }
+
+  - term: "레귤러"
+    apply: { options: { size: "M" } }
+    meta: { kind: "size", confidence: 0.95 }
+
+  - term: "미디움"
+    apply: { options: { size: "M" } }
+    meta: { kind: "size", confidence: 0.9 }
+
+  - term: "보통"
+    apply: { options: { size: "M" } }
+    meta: { kind: "size_phrase", confidence: 0.8 }
+
+  - term: "라지"
+    apply: { options: { size: "L" } }
+    meta: { kind: "size", confidence: 0.95 }
+
+  - term: "크게"
+    apply: { options: { size: "L" } }
+    meta: { kind: "size_phrase", confidence: 0.8 }
+
+  - term: "그란데"
+    apply: { options: { size: "L" } }
+    meta: { kind: "size_brandish", confidence: 0.75 }
+
+  - term: "벤티"
+    apply: { options: { size: "XL" } }
+    meta: { kind: "size_brandish", confidence: 0.8 }
+
+  # ----------------------------
+  # GLOBAL: Temperature
+  # ----------------------------
+  - term: "핫"
+    apply: { options: { temp: "HOT" } }
+    meta: { kind: "temp", confidence: 0.98 }
+
+  - term: "뜨거운"
+    apply: { options: { temp: "HOT" } }
+    meta: { kind: "temp_phrase", confidence: 0.95 }
+
+  - term: "따뜻하게"
+    apply: { options: { temp: "HOT" } }
+    meta: { kind: "temp_phrase", confidence: 0.85 }
+
+  - term: "아이스"
+    apply: { options: { temp: "ICE" } }
+    meta: { kind: "temp", confidence: 0.98 }
+
+  - term: "차가운"
+    apply: { options: { temp: "ICE" } }
+    meta: { kind: "temp_phrase", confidence: 0.9 }
+
+  - term: "시원하게"
+    apply: { options: { temp: "ICE" } }
+    meta: { kind: "temp_phrase", confidence: 0.85 }
+
+  # ----------------------------
+  # GLOBAL: Ice amount
+  # ----------------------------
+  - term: "얼음 없이"
+    apply: { options: { ice: "NONE" } }
+    meta: { kind: "ice", confidence: 0.95 }
+
+  - term: "얼음 빼고"
+    apply: { options: { ice: "NONE" } }
+    meta: { kind: "ice", confidence: 0.9 }
+
+  - term: "얼음 조금"
+    apply: { options: { ice: "LESS" } }
+    meta: { kind: "ice", confidence: 0.9 }
+
+  - term: "얼음 적게"
+    apply: { options: { ice: "LESS" } }
+    meta: { kind: "ice", confidence: 0.95 }
+
+  - term: "얼음 보통"
+    apply: { options: { ice: "REGULAR" } }
+    meta: { kind: "ice", confidence: 0.8 }
+
+  - term: "얼음 많이"
+    apply: { options: { ice: "MORE" } }
+    meta: { kind: "ice", confidence: 0.9 }
+
+  # ----------------------------
+  # GLOBAL: Shot / Syrup / Sweetness
+  # ----------------------------
+  - term: "샷 추가"
+    apply: { options: { shot: "+1" } }
+    meta: { kind: "shot", confidence: 0.95 }
+
+  - term: "한 샷 더"
+    apply: { options: { shot: "+1" } }
+    meta: { kind: "shot_phrase", confidence: 0.95 }
+
+  - term: "두 샷 추가"
+    apply: { options: { shot: "+2" } }
+    meta: { kind: "shot", confidence: 0.9 }
+
+  - term: "더블샷"
+    apply: { options: { shot: "+2" } }
+    meta: { kind: "shot", confidence: 0.85 }
+
+  - term: "트리플샷"
+    apply: { options: { shot: "+3" } }
+    meta: { kind: "shot", confidence: 0.75 }
+
+  - term: "시럽 빼고"
+    apply: { options: { syrup: "NONE" } }
+    meta: { kind: "syrup", confidence: 0.9 }
+
+  - term: "덜 달게"
+    apply: { options: { sweetness: "LESS" } }
+    meta: { kind: "sweet", confidence: 0.95 }
+
+  - term: "적당히 달게"
+    apply: { options: { sweetness: "REGULAR" } }
+    meta: { kind: "sweet", confidence: 0.85 }
+
+  - term: "달달하게"
+    apply: { options: { sweetness: "MORE" } }
+    meta: { kind: "sweet", confidence: 0.85 }
+
+  # ----------------------------
+  # GLOBAL: Milk options (라떼/밀크류)
+  # ----------------------------
+  - term: "두유로"
+    apply: { options: { milk: "SOY" } }
+    meta: { kind: "milk", confidence: 0.9 }
+
+  - term: "오트밀크로"
+    apply: { options: { milk: "OAT" } }
+    meta: { kind: "milk", confidence: 0.9 }
+
+  - term: "저지방 우유로"
+    apply: { options: { milk: "LOWFAT" } }
+    meta: { kind: "milk", confidence: 0.85 }
+
+  - term: "무지방 우유로"
+    apply: { options: { milk: "NONFAT" } }
+    meta: { kind: "milk", confidence: 0.85 }
+
+  # ----------------------------
+  # GLOBAL: Order type (매장/포장)
+  # ----------------------------
+  - term: "포장"
+    apply: { order_type: "TAKE_OUT" }
+    meta: { kind: "takeout", confidence: 0.98 }
+
+  - term: "테이크아웃"
+    apply: { order_type: "TAKE_OUT" }
+    meta: { kind: "takeout", confidence: 0.95 }
+
+  - term: "테잌아웃"
+    apply: { order_type: "TAKE_OUT" }
+    meta: { kind: "takeout_typo", confidence: 0.7 }
+
+  - term: "먹고 가요"
+    apply: { order_type: "DINE_IN" }
+    meta: { kind: "dinein", confidence: 0.95 }
+
+  - term: "매장이요"
+    apply: { order_type: "DINE_IN" }
+    meta: { kind: "dinein", confidence: 0.9 }

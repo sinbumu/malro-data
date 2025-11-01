@@ -1,14 +1,200 @@
-version: "2025-10-20"
-intents:
-  order:
-    include_regex:
-      - "주문|추가|빼|변경|포장|테이크아웃|사이즈|샷|시럽|뜨거운|차가운|아이스|핫|수량|개|잔|세트|메뉴|옵션"
-    exclude_regex:
-      - "취소(해|합니다)?|환불"
-slot_hints:
-  size: [S, M, L]
-  temp: [ICE, HOT]
-domain_overrides:
-  cafe:
-    size_alias: { 톨: M, 라지: L, 벤티: L }
-    temp_alias: { 아아: ICE, 뜨아: HOT }
+version: "0.2.0"
+locale: ko-KR
+domain_default: cafe
+
+normalization:
+  # 텍스트 전처리 규칙(파서/ETL 공통 사용 권장)
+  unicode_form: NFC
+  lower: true
+  strip_regex: "[^0-9a-zA-Z가-힣%+./()\\-\\s]"
+  collapse_spaces: true
+  trim: true
+  # STT 잡음 토큰(선행 제거)
+  stt_noise_tokens:
+    - "음"
+    - "어"
+    - "저기"
+    - "그"
+    - "약간"
+    - "어.."
+    - "음.."
+    - "그.."
+
+filters:
+  # 1차 게이트: 고객 질문 + 카테고리 + 주문 관련 키워드
+  require_speaker: "c"     # 발화자(c: 고객)
+  require_qa: "q"          # QA여부(q: 질문)
+  category_whitelist: ["카페"]  # 필요 시 ["카페","음식점"] 등 다중 허용
+  order_keywords:           # 여기에 하나라도 매칭되면 주문성 후보로 취급
+    - "주문"
+    - "추가"
+    - "변경"
+    - "빼"
+    - "포장"
+    - "테이크"
+    - "뜨거운"
+    - "핫"
+    - "차가운"
+    - "아이스"
+    - "사이즈"
+    - "톨"
+    - "레귤러"
+    - "미디움"
+    - "라지"
+    - "그란데"
+    - "벤티"
+    - "샷"
+    - "시럽"
+    - "얼음"
+    - "달게"
+    - "덜 달게"
+    - "잔"
+    - "개"
+    - "먹고 가"
+    - "매장"
+  # 정규식 게이트(선택): 빠른 필터용
+  order_gate_regex: "(주문|추가|변경|빼|포장|테이크|사이즈|샷|시럽|얼음|뜨거운|핫|차가운|아이스|잔|개|먹고\\s*가|매장)"
+
+parsing:
+  # 수량/단위 추출
+  quantity:
+    units: ["잔", "개", "컵", "병", "캔", "조각", "pcs", "피스"]
+    # e.g., "2잔", "두 잔", "세 개", "라지 아아 두 잔 포장"
+    regexes:
+      - "(?P<num>\\d+)\\s*(?P<unit>잔|개|컵|병|캔|조각|pcs|피스)"
+      - "(?P<wordnum>한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\\s*(?P<unit>잔|개|컵|병|캔|조각|pcs|피스)"
+    number_words:
+      한: 1
+      하나: 1
+      두: 2
+      둘: 2
+      세: 3
+      셋: 3
+      네: 4
+      넷: 4
+      다섯: 5
+      여섯: 6
+      일곱: 7
+      여덟: 8
+      아홉: 9
+      열: 10
+
+  # 슬롯 힌트(동의어 파일과 별개로, 의도 파악/ASK 유도에 사용)
+  slots:
+    size:
+      S: ["스몰", "작게", "소", "small", "sm"]
+      M: ["레귤러", "미디움", "보통", "중", "regular", "medium", "md"]
+      L: ["라지", "크게", "그란데", "대", "large", "grand", "lg"]
+      XL: ["벤티", "엑스엘", "xl", "extra large"]
+    temp:
+      HOT: ["핫", "뜨거운", "따뜻하게", "따뜻한", "hot", "warm"]
+      ICE: ["아이스", "차가운", "시원하게", "ice", "iced", "cold"]
+    ice:
+      NONE: ["얼음 없이", "얼음 빼고", "얼음 x", "노아이스", "no ice"]
+      LESS: ["얼음 적게", "얼음 조금", "얼음 덜", "less ice"]
+      REGULAR: ["얼음 보통", "보통 얼음", "regular ice"]
+      MORE: ["얼음 많이", "얼음 추가", "more ice"]
+    shot:
+      plus1: ["샷 추가", "한 샷 더", "+1샷", "원샷 추가"]
+      plus2: ["두 샷 추가", "더블샷", "+2샷"]
+      plus3: ["트리플샷", "+3샷"]
+      half:  ["반샷"]
+    syrup:
+      NONE: ["시럽 빼고", "무가당", "무설탕", "no syrup"]
+      VANILLA: ["바닐라 시럽", "바닐라 추가"]
+      CARAMEL: ["카라멜 시럽", "카라멜 추가"]
+      HAZELNUT: ["헤이즐넛 시럽", "헤이즐넛 추가"]
+      MOCHA: ["모카 시럽", "모카 추가"]
+    sweetness:
+      LESS: ["덜 달게", "당도 낮게", "less sweet", "half sweet"]
+      REGULAR: ["보통 당도", "그대로", "기본 당도", "regular"]
+      MORE: ["달달하게", "더 달게", "sweet more"]
+    milk:
+      WHOLE: ["일반 우유", "원유"]
+      LOWFAT: ["저지방 우유", "저지방"]
+      NONFAT: ["무지방 우유", "무지방"]
+      SOY: ["두유"]
+      OAT: ["오트 밀크", "오트", "귀리 우유"]
+      ALMOND: ["아몬드 밀크", "아몬드 우유"]
+    order_type:
+      TAKE_OUT: ["포장", "테이크아웃", "to go", "투고"]
+      DINE_IN: ["먹고 가요", "매장이요", "매장", "here", "for here"]
+
+  # SKU 키워드 힌트(aliases가 없을 때의 보조; 우선순위는 aliases > hints)
+  sku_hints:
+    AMERICANO: ["아메리카노", "americano", "아메", "아아", "뜨아"]
+    CAFE_LATTE: ["카페라떼", "라떼", "라테", "latte", "카페 라떼", "아라", "핫라떼", "아이스 라떼"]
+    CAPPUCCINO: ["카푸치노", "카프치노", "cappuccino"]
+    CAFE_MOCHA: ["카페모카", "모카", "mocha"]
+    VANILLA_LATTE: ["바닐라라떼", "바닐라 라떼", "바라", "vanilla latte"]
+    CARAMEL_MACCHIATO: ["카라멜 마키아토", "카라멜 마끼아또", "마끼아또", "macchiato", "카마"]
+    ESPRESSO: ["에스프레소", "에스프레쏘", "엑스프레소", "espresso", "에쏘"]
+    COLD_BREW: ["콜드브루", "콜드 브루", "콜브루", "콜부", "cold brew"]
+    COLD_BREW_LATTE: ["콜드브루 라떼", "콜브루 라떼", "cold brew latte"]
+    MATCHA_LATTE: ["말차 라떼", "그린티 라떼", "녹차 라떼", "matcha latte", "green tea latte"]
+    HOJICHA_LATTE: ["호지 라떼", "호지차 라떼", "hojicha latte"]
+    SWEET_POTATO_LATTE: ["고구마 라떼", "자색 고구마 라떼"]
+    CHAI_LATTE: ["차이 라떼", "차이티 라떼", "chai latte"]
+    EARL_GREY_TEA: ["얼그레이", "earl grey"]
+    GREEN_TEA: ["그린 티", "녹차", "green tea"]
+    CHAMOMILE_TEA: ["캐모마일", "카모마일", "chamomile"]
+    PEACH_ICED_TEA: ["복숭아 아이스티", "피치 아이스티", "iced tea"]
+    LEMON_ADE: ["레몬에이드", "레모네이드", "lemon ade", "lemonade"]
+    GRAPEFRUIT_ADE: ["자몽에이드", "grapefruit ade"]
+    LIME_MINT_ADE: ["라임 민트에이드", "모히토", "모히또", "lime mint", "mojito"]
+    STRAWBERRY_BANANA_SMOOTHIE: ["딸기바나나 스무디", "딸바 스무디", "딸바"]
+    MANGO_SMOOTHIE: ["망고 스무디"]
+    BLUEBERRY_YOGURT_SMOOTHIE: ["블루베리 요거트 스무디", "블베 요거트"]
+    VANILLA_BEAN_FRAPPE: ["바닐라빈 프라페", "바닐라 프라페"]
+    COFFEE_FRAPPE: ["커피 프라페", "프라푸치노", "frappuccino"]
+    CROISSANT: ["크루아상", "크로와상"]
+    CHOCOLATE_CAKE: ["초코 케이크", "초코 케익", "초콜릿 케이크"]
+    NEWYORK_CHEESECAKE: ["뉴욕 치즈케이크", "치즈 케이크", "cheesecake"]
+    TIRAMISU: ["티라미수", "tiramisu"]
+    BUTTER_COOKIE_3PCS: ["버터 쿠키", "버터쿠키"]
+    CHOCOCHIP_COOKIE_3PCS: ["초코칩 쿠키"]
+    BAGEL_CREAMCHEESE: ["베이글 크림치즈", "크림치즈 베이글"]
+    HAM_CHEESE_SANDWICH: ["햄치즈 샌드위치", "햄치즈 샌드"]
+
+rewrites:
+  # STT/오타 교정(전처리 단계에서 일괄 치환)
+  # 주의: 과잉치환 방지 위해 단어 경계 사용 권장
+  replacements:
+    - pattern: "\\b엑스프레소\\b"
+      replace: "에스프레소"
+    - pattern: "\\b카모마일\\b"
+      replace: "캐모마일"
+    - pattern: "\\b레모네이드\\b"
+      replace: "레몬에이드"
+    - pattern: "\\b모히또\\b"
+      replace: "모히토"
+    - pattern: "\\b프라프치노\\b"
+      replace: "프라푸치노"
+    - pattern: "\\b카프치노\\b"
+      replace: "카푸치노"
+    - pattern: "\\b크로아상\\b"
+      replace: "크루아상"
+    - pattern: "\\b바닐라 라테\\b"
+      replace: "바닐라 라떼"
+    - pattern: "\\b라테\\b"
+      replace: "라떼"
+
+ask_templates:
+  # 슬롯이 비었을 때 짧게 되묻는 질문 템플릿(데이터 생성시 참고)
+  temp_missing: "핫으로 드릴까요, 아이스로 드릴까요?"
+  size_missing: "사이즈는 S/M/L 중 어떤 걸로 드릴까요?"
+  qty_missing: "수량은 몇 잔으로 드릴까요?"
+  milk_missing: "우유는 일반/저지방/무지방/두유/오트 중에서 선택해 주세요."
+  sweetness_missing: "당도는 덜 달게/보통/달달하게 중에서 골라주세요."
+  order_type_missing: "포장이세요, 매장이세요?"
+
+validation:
+  # 아티팩트 검증 규칙(별칭/슬롯 충돌 방지)
+  alias_conflict_threshold: 2   # 하나의 term이 2개 이상 SKU에 동일 점수로 매칭되면 경고
+  duplicate_term_merge: true    # 동일 term-적용이 중복되면 병합
+  max_alias_length: 30
+
+notes:
+  - "aliases.cafe.yml이 존재하면 그쪽 매핑이 우선이며, patterns의 sku_hints는 보조로만 사용."
+  - "rewrites는 전처리에서 순서대로 적용; 과잉치환 방지를 위해 단어경계(\\b) 활용."
+  - "수량 파싱은 단어수(한/두/세..)와 숫자 모두 지원."
