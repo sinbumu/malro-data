@@ -1,7 +1,7 @@
 {
   "domain": "cafe",
   "version": "0.1.0",
-  "generated_at": "2025-11-01T06:33:44.724027+00:00",
+  "generated_at": "2025-11-08T07:40:06.872215+00:00",
   "counts": {
     "aliases": 111,
     "few_shots": 62,
